@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 1422187149491482057}
   - component: {fileID: 3627011254390445115}
   - component: {fileID: 322291133}
+  - component: {fileID: 835795062}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -130,10 +131,12 @@ MonoBehaviour:
   m_rayDistance: 0.55
   m_direction: 1
   m_isAlive: 0
-  m_jumped: 0
+  m_isJumping: 0
   RayOrigin: {fileID: 1130012584}
   TileGenerator: {fileID: 0}
-  Score: {fileID: 0}
+  CollisionMask:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!50 &322291133
 Rigidbody2D:
   serializedVersion: 4
@@ -155,3 +158,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &835795062
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422187149491482058}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fd2a3285a5b3ada4c81b166509c343fc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

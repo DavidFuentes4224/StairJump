@@ -37,15 +37,6 @@ public class GameStateManager : MonoBehaviour
         if(PlayerRef.GetIsAlive())
         {
             UpdateFirePosition();
-            if(!PlayerRef.GetIsGrounded())
-            {
-                m_timer -= Time.deltaTime;
-
-            }
-        }
-        if (m_timer < 0)
-        {
-            PlayerRef.KillPlayer();
         }
         HandleInput();
     }
@@ -68,10 +59,9 @@ public class GameStateManager : MonoBehaviour
     {
         m_currentScore += 1;
         Score.text = $"High Score: {m_currentScore}";
-        DecreaseFirePosition();
     }
 
-    private void DecreaseFirePosition()
+    public void DecreaseFirePosition()
     {
         var decreasedPos = Fire.position - Vector3.up;
         var newPos = (decreasedPos.y > m_originalFirePosition.y) ? decreasedPos : m_originalFirePosition;

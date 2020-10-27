@@ -16,8 +16,9 @@ public class Player : MonoBehaviour
     private bool m_isAlive;
     private Rigidbody2D m_rigidbody;
     [SerializeField]
-    private bool m_jumped;
+    private bool m_isJumping;
     private GameStateManager m_manager;
+    private Animator m_animator;
 
     public Transform RayOrigin;
     public TileGenerator TileGenerator;
@@ -28,49 +29,49 @@ public class Player : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_manager = FindObjectOfType<GameStateManager>();
+        m_animator = GetComponent<Animator>();
     }
 
     private void Start()
     {
         m_direction = Directions.RIGHT;
         m_isGrounded = true;
-        m_jumped = false;
+        m_isJumping = false;
         m_isAlive = true;
         m_rayDistance = 0.55f;
+        m_animator.enabled = true;
     }
 
     void Update()
     {
-        if(m_isGrounded)
+        m_isGrounded = CheckIfGrounded();
+        m_animator.SetBool("Jump", false);
+
+        if (!m_isGrounded && !m_isJumping)
+        {
+            KillPlayer();
+        }
+        else if (m_isGrounded &&!m_isJumping)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                TileGenerator.UpdateTiles2(m_direction);
-                m_jumped = true;
+                HandleJump();
             }
             else if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                transform.localScale = new Vector3(m_direction * 0.1f,0.1f);
+                transform.localScale = new Vector3(m_direction * 0.1f, 0.1f);
                 m_direction *= -1;
-                TileGenerator.UpdateTiles2(m_direction);
-                m_jumped = true;
+                HandleJump();
             }
         }
         
     }
 
-    private void FixedUpdate()
+    private void HandleJump()
     {
-        m_isGrounded = CheckIfGrounded();
-    }
-
-    private void LateUpdate()
-    {
-        if(m_jumped && CheckIfGrounded())
-        {
-            m_manager.UpdateScore();
-            m_jumped = false;
-        }
+        m_manager.DecreaseFirePosition();
+        m_animator.SetBool("Jump", true);
+        TileGenerator.UpdateTiles(m_direction);
     }
 
     private bool CheckIfGrounded()
@@ -78,12 +79,8 @@ public class Player : MonoBehaviour
         var hit = Physics2D.Raycast(transform.position, -Vector2.up, m_rayDistance,CollisionMask);
         Debug.DrawRay(transform.position, -Vector2.up * m_rayDistance,Color.red);
 
-        if (hit.collider != null)
+        if (hit.collider != null && hit.collider.gameObject.layer != 9)
         {
-            if(hit.collider.gameObject.layer == 9) //Fire Layer
-            {
-                KillPlayer();
-            }
             return true;
         }
         else
@@ -106,5 +103,19 @@ public class Player : MonoBehaviour
     {
         m_isAlive = false;
         m_rigidbody.simulated = true;
+        m_animator.enabled = false;
+    }
+
+    public void OnPlayerJumped()
+    {
+        m_isJumping = true;
+    }
+
+    public void OnPlayerLanded()
+    {
+        m_isJumping = false;
+
+        if (m_isGrounded) m_manager.UpdateScore();
+        
     }
 }
