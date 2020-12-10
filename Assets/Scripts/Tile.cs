@@ -18,9 +18,9 @@ public class Tile : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, Target, Speed);
     }
 
-    public void UpdateTarget(int x)
+    public void UpdateTarget(float x)
     {
-        Target += new Vector3(x, -1, 0);
+        Target += new Vector3(x, -Settings.HEIGHT, 0);
     }
 
     public void ResetTarget()

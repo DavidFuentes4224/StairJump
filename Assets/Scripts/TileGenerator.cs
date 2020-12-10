@@ -12,7 +12,7 @@ public class TileGenerator : MonoBehaviour
     public int MAXTILES;
     public Transform TilePrefab;
     public int MaxDistanceDown;
-    public Background Background;
+    public Parallaxer Background;
 
     private void Awake()
     {
@@ -41,8 +41,8 @@ public class TileGenerator : MonoBehaviour
 
             m_tiles[i] = pooledObject;
             var chance = GetShouldTurn();
-            var direction = (-1 + chance) *2;
-            currentPosition += new Vector2(direction,1);
+            var direction = (-1 + chance) * Settings.DISTANCE;
+            currentPosition += new Vector2(direction, Settings.HEIGHT);
         }
         m_nextPos = currentPosition;
     }
@@ -56,11 +56,11 @@ public class TileGenerator : MonoBehaviour
             if (!tile.gameObject.active)
             {
                 var chance = GetShouldTurn();
-                var turnDirection = (-1 + chance) * 2;
+                var turnDirection = (-1 + chance) * Settings.DISTANCE;
                 tile.position = m_nextPos;
                 tileRef.ResetTarget();
                 tile.gameObject.SetActive(true);
-                m_nextPos += new Vector3(turnDirection, 1);
+                m_nextPos += new Vector3(turnDirection, Settings.HEIGHT);
             }
             else
             {
@@ -69,10 +69,10 @@ public class TileGenerator : MonoBehaviour
                     tile.gameObject.SetActive(false);
                 }
             }
-            tileRef.UpdateTarget(2 * direction);
+            tileRef.UpdateTarget(Settings.DISTANCE * direction);
         }
-        m_nextPos += new Vector3(2 * direction, -1);
-        Background.UpdateOffset(2 * direction);
+        m_nextPos += new Vector3(Settings.DISTANCE * direction, -Settings.HEIGHT);
+        Background.UpdateTargetOffset(Settings.DISTANCE * direction);
     }
 
     public int GetShouldTurn()

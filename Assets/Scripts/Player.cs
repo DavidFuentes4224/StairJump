@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     private bool m_isJumping;
     private GameStateManager m_manager;
     private Animator m_animator;
+    private bool m_should_jump;
+    private bool m_should_turn;
 
     public Transform RayOrigin;
     public TileGenerator TileGenerator;
@@ -40,6 +42,7 @@ public class Player : MonoBehaviour
         m_isAlive = true;
         m_rayDistance = 0.55f;
         m_animator.enabled = true;
+
     }
 
     void Update()
@@ -53,31 +56,48 @@ public class Player : MonoBehaviour
         }
         else if (m_isGrounded &&!m_isJumping)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || m_should_jump)
             {
                 HandleJump();
             }
-            else if (Input.GetKeyDown(KeyCode.LeftControl))
+            else if (Input.GetKeyDown(KeyCode.LeftControl) || m_should_turn)
             {
-                transform.localScale = new Vector3(m_direction * 0.1f, 0.1f);
-                m_direction *= -1;
-                HandleJump();
+                HandleTurn();
             }
         }
         
     }
 
-    private void HandleJump()
+    public void HandleJump()
     {
         m_manager.DecreaseFirePosition();
         m_animator.SetBool("Jump", true);
         TileGenerator.UpdateTiles(m_direction);
+        m_should_jump = false;
+        m_should_turn = false;
+    }
+
+    public void HandleTurn()
+    {
+        transform.localScale = new Vector3(m_direction, 1);
+        m_direction *= -1;
+        HandleJump();
+    }
+
+    public void TryJump()
+    {
+        m_should_jump = true;
+    }
+
+    public void TryTurn()
+    {
+        m_should_turn = true;
     }
 
     private bool CheckIfGrounded()
     {
-        var hit = Physics2D.Raycast(transform.position, -Vector2.up, m_rayDistance,CollisionMask);
-        Debug.DrawRay(transform.position, -Vector2.up * m_rayDistance,Color.red);
+        var hit = Physics2D.Raycast(RayOrigin.position, -Vector2.up, m_rayDistance,CollisionMask);
+        Debug.DrawRay(RayOrigin.position, -Vector2.up * m_rayDistance,Color.red);
 
         if (hit.collider != null && hit.collider.gameObject.layer != 9)
         {
