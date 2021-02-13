@@ -186,7 +186,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: OnPlayerJumped
+    functionName: EnableJumping
     data: 
     objectReferenceParameter: {fileID: 21300000, guid: fe839a20db82e964aa49c6568bb9f004,
       type: 3}
@@ -194,7 +194,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.33333334
-    functionName: OnPlayerLanded
+    functionName: DisableJumping
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
