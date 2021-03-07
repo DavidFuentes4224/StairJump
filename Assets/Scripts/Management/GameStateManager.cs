@@ -10,13 +10,16 @@ public class GameStateManager : MonoBehaviour
     [SerializeField]
     private int m_currentScore;
     [SerializeField]
+    private int m_currentCoin;
+    [SerializeField]
     private bool gameRunning = false;
 
     public static event Action<JumpEventArgs> PlayerJumped;
     public static event Action PlayerLanded;
-    public static event Action PlayerDied;
+    public static event Action<DiedEventArgs> PlayerDied;
     public static event Action RestartGame;
     public static event Action StartGame;
+    public static event Action CoinPickup;
 
     public static Player PlayerRef;
 
@@ -31,6 +34,15 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+    public class DiedEventArgs : EventArgs
+    {
+        public int Score { get; set; }
+        public DiedEventArgs(int score)
+        {
+            Score = score;
+        }
+    }
+
     private void Awake()
     {
         PlayerRef = FindObjectOfType<Player>();
@@ -39,23 +51,15 @@ public class GameStateManager : MonoBehaviour
     private void Start()
     {
         m_currentScore = 0;
+        m_currentCoin = 0;
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
         PlayerLanded += M_OnPlayerLanded;
-        PlayerDied += M_OnPlayerDied;
-    }
-
-    private void M_OnPlayerDied()
-    {
+        CoinPickup += M_OnCoinPickup;
     }
 
     void Update()
     {
         HandleInput();
-    }
-
-    private void M_OnPlayerLanded()
-    {
-        UpdateScore();
     }
 
     public static void OnPlayerJumped(int direction)
@@ -73,7 +77,8 @@ public class GameStateManager : MonoBehaviour
     public static void OnPlayerDied()
     {
         Debug.Log("EVENT: Died");
-        PlayerDied?.Invoke();
+        var manager = GameObject.FindObjectOfType<GameStateManager>();
+        PlayerDied?.Invoke(new DiedEventArgs(manager.m_currentScore));
     }
 
     public static void OnRestartGame()
@@ -86,6 +91,12 @@ public class GameStateManager : MonoBehaviour
     {
         Debug.Log("EVENT: Started");
         StartGame?.Invoke();
+    }
+
+    public static void OnCoinPickup()
+    {
+        Debug.Log("EVENT: Coin picked up");
+        CoinPickup?.Invoke();
     }
     
     private void HandleInput()
@@ -107,6 +118,7 @@ public class GameStateManager : MonoBehaviour
     {
         OnRestartGame();
         m_currentScore = -1;
+        m_currentCoin = 0;
         UpdateScore();
         gameRunning = false;
     }
@@ -119,5 +131,15 @@ public class GameStateManager : MonoBehaviour
     public int GetHeight()
     {
         return m_currentScore;
+    }
+
+    private void M_OnPlayerLanded()
+    {
+        UpdateScore();
+    }
+
+    private void M_OnCoinPickup()
+    {
+        m_currentCoin++;
     }
 }

@@ -92,7 +92,7 @@ public class TileGenerator : MonoBehaviour
             tileRef.UpdateTarget(Settings.DISTANCE * direction);
         }
         m_nextPos += new Vector3(Settings.DISTANCE * direction, -Settings.HEIGHT);
-        Background.UpdateTargetOffset(Settings.DISTANCE * direction);
+        //Background.UpdateTargetOffset(Settings.DISTANCE * direction);
     }
 
     private void SpawnTile(Transform tile, Tile tileRef)

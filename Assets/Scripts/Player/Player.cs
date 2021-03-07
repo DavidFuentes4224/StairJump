@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     private Rigidbody2D m_rigidbody;
     [SerializeField]
     private bool m_isJumping;
+    [SerializeField]
+    private SpriteRenderer[] SpriteLayers = new SpriteRenderer[6];
+
     private Animator m_animator;
     private bool m_should_jump;
     private bool m_should_turn;
@@ -66,7 +69,7 @@ public class Player : MonoBehaviour
         m_animator.enabled = true;
         m_rigidbody.velocity = Vector3.zero;
         m_rigidbody.simulated = false;
-        transform.localScale = new Vector3(-m_direction, 1);
+        //transform.localScale = new Vector3(-m_direction, 1);
 
     }
 
@@ -105,7 +108,11 @@ public class Player : MonoBehaviour
 
     public void HandleTurn()
     {
-        transform.localScale = new Vector3(m_direction, 1);
+        //transform.localScale = new Vector3(m_direction, 1);
+        foreach(var spritelayer in SpriteLayers)
+        {
+            spritelayer.flipX = !spritelayer.flipX;
+        }
         m_direction *= -1;
         HandleJump();
     }
@@ -161,7 +168,7 @@ public class Player : MonoBehaviour
         if (m_isGrounded) GameStateManager.OnPlayerLanded();
     }
 
-    private void OnPlayerDied()
+    private void OnPlayerDied(GameStateManager.DiedEventArgs e)
     {
         m_isAlive = false;
         m_rigidbody.simulated = true;

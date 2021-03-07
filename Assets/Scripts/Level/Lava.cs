@@ -50,7 +50,7 @@ public class Lava : MonoBehaviour
         enabled = false;
     }
 
-    private void OnPlayerDied()
+    private void OnPlayerDied(GameStateManager.DiedEventArgs e)
     {
         playerAlive = false;
     }

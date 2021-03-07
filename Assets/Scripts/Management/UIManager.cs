@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
         HighScore.text = $"High Score: {m_manager.GetHeight()}";
     }
 
-    private void OnPlayerDied()
+    private void OnPlayerDied(GameStateManager.DiedEventArgs e)
     {
         TapToStart.SetActive(false);
         ScorePanel.SetActive(true);

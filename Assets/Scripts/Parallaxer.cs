@@ -13,16 +13,23 @@ public class Parallaxer : MonoBehaviour
     [SerializeField]
     private float globalSpeedModifier = 1f;
 
+    [SerializeField]
+    private bool autoScroll = false;
+    [SerializeField]
+    private Vector2 autoScrollDirection = new Vector2();
 
-
-    // Start is called before the first frame update
     void Start()
     {
         m_targetOffset = Vector2.zero;
         GameStateManager.RestartGame += OnRestartGame;
+        GameStateManager.PlayerJumped += OnPlayerJumped;
     }
 
-    // Update is called once per frame
+    private void OnPlayerJumped(GameStateManager.JumpEventArgs e)
+    {
+        UpdateTargetOffset(e.Direction);
+    }
+
     void Update()
     {
         for(int i = 0; i < Layers.Length; i++)
@@ -33,15 +40,8 @@ public class Parallaxer : MonoBehaviour
             var offSet = Vector2.Lerp(layer.material.GetTextureOffset("_MainTex"), m_targetOffset * speed * globalSpeedModifier, Time.deltaTime);
             layer.material.SetTextureOffset("_MainTex", offSet);
         }
-        //var grassOffset = Vector2.Lerp(GrassRenderer.material.GetTextureOffset("_MainTex"), m_targetOffset * GrassSpeed * globalSpeedModifier, Time.deltaTime);
-        //var grass2Offset = Vector2.Lerp(Grass2Renderer.material.GetTextureOffset("_MainTex"), m_targetOffset * Grass2Speed * globalSpeedModifier, Time.deltaTime );
-        //var cityOffset = Vector2.Lerp(CityRenderer.material.GetTextureOffset("_MainTex"), m_targetOffset * CitySpeed * globalSpeedModifier, Time.deltaTime );
-        //var cloudOffset = Vector2.Lerp(CloudRenderer.material.GetTextureOffset("_MainTex"), m_targetOffset * CloudSpeed * globalSpeedModifier, Time.deltaTime );
-
-        //GrassRenderer.material.SetTextureOffset("_MainTex", grassOffset);
-        //Grass2Renderer.material.SetTextureOffset("_MainTex", grass2Offset);
-        //CityRenderer.material.SetTextureOffset("_MainTex", cityOffset);
-        //CloudRenderer.material.SetTextureOffset("_MainTex", cloudOffset);
+        if (autoScroll)
+            UpdateTargetOffset(autoScrollDirection);
     }
 
     private void OnRestartGame()
@@ -49,8 +49,13 @@ public class Parallaxer : MonoBehaviour
         m_targetOffset = new Vector2 (m_targetOffset.x,0);
     }
 
-    public void UpdateTargetOffset(float direction)
+    private void UpdateTargetOffset(float direction)
     {
-        m_targetOffset += new Vector2(direction, 1) * globalSpeedModifier;
+        m_targetOffset += new Vector2(-direction * Settings.DISTANCE, 1) * globalSpeedModifier;
+    }
+
+    private void UpdateTargetOffset(Vector2 direction)
+    {
+        m_targetOffset += direction * globalSpeedModifier;
     }
 }
