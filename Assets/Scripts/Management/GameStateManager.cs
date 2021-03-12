@@ -13,6 +13,8 @@ public class GameStateManager : MonoBehaviour
     private int m_currentCoin;
     [SerializeField]
     private bool gameRunning = false;
+    [SerializeField]
+    private static bool created = false;
 
     public static event Action<JumpEventArgs> PlayerJumped;
     public static event Action PlayerLanded;
@@ -37,21 +39,38 @@ public class GameStateManager : MonoBehaviour
     public class DiedEventArgs : EventArgs
     {
         public int Score { get; set; }
-        public DiedEventArgs(int score)
+        public int Coins { get; set; }
+        public DiedEventArgs(int score,int coins)
         {
             Score = score;
+            Coins = coins;
+        }
+    }
+
+    private static GameStateManager instance;
+    public static GameStateManager Instance
+    {
+        get
+        {
+            return instance;
         }
     }
 
     private void Awake()
     {
         PlayerRef = FindObjectOfType<Player>();
+        if (!created)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            created = true;
+            instance = this;
+        }
     }
 
     private void Start()
     {
         m_currentScore = 0;
-        m_currentCoin = 0;
+        m_currentCoin = SaveManager.Instance.GetCoin();
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
         PlayerLanded += M_OnPlayerLanded;
         CoinPickup += M_OnCoinPickup;
@@ -60,6 +79,12 @@ public class GameStateManager : MonoBehaviour
     void Update()
     {
         HandleInput();
+    }
+
+    private void OnDestroy()
+    {
+        PlayerLanded -= M_OnPlayerLanded;
+        CoinPickup -= M_OnCoinPickup;
     }
 
     public static void OnPlayerJumped(int direction)
@@ -77,8 +102,8 @@ public class GameStateManager : MonoBehaviour
     public static void OnPlayerDied()
     {
         Debug.Log("EVENT: Died");
-        var manager = GameObject.FindObjectOfType<GameStateManager>();
-        PlayerDied?.Invoke(new DiedEventArgs(manager.m_currentScore));
+        var manager = instance;
+        PlayerDied?.Invoke(new DiedEventArgs(manager.m_currentScore,manager.m_currentCoin));
     }
 
     public static void OnRestartGame()
@@ -118,7 +143,7 @@ public class GameStateManager : MonoBehaviour
     {
         OnRestartGame();
         m_currentScore = -1;
-        m_currentCoin = 0;
+        m_currentCoin = SaveManager.Instance.GetCoin();
         UpdateScore();
         gameRunning = false;
     }

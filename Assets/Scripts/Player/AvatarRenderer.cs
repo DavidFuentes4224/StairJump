@@ -7,16 +7,16 @@ public class AvatarRenderer : MonoBehaviour
 {
     public enum SELECTEDPART { BODY, EYES, HAIR, BEARD, SHIRT, PANTS,NONE};
     [Header("Sprites")]
-    [SerializeField] private Sprite[] m_HairSprites;
-    [SerializeField] private Sprite[] m_BeardSprites;
+    [SerializeField] private Sprite[] m_HairSprites = null;
+    [SerializeField] private Sprite[] m_BeardSprites = null;
 
     [Header("Renderers")]
-    [SerializeField] private SpriteRenderer m_bodyRenderer;
-    [SerializeField] private SpriteRenderer m_eyesRenderer;
-    [SerializeField] private SpriteRenderer m_hairRenderer;
-    [SerializeField] private SpriteRenderer m_beardRenderer;
-    [SerializeField] private SpriteRenderer m_shirtRenderer;
-    [SerializeField] private SpriteRenderer m_pantsRenderer;
+    [SerializeField] private SpriteRenderer m_bodyRenderer = null;
+    [SerializeField] private SpriteRenderer m_eyesRenderer = null;
+    [SerializeField] private SpriteRenderer m_hairRenderer = null;
+    [SerializeField] private SpriteRenderer m_beardRenderer = null;
+    [SerializeField] private SpriteRenderer m_shirtRenderer = null;
+    [SerializeField] private SpriteRenderer m_pantsRenderer = null;
 
     [Header("Colors")]
     [SerializeField] private Dictionary<SELECTEDPART,SpriteRenderer> m_SpriteColorByPartName;

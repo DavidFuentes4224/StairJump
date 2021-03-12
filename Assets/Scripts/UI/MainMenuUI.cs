@@ -2,27 +2,30 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
     [Header("ForeGrounds")]
-    [SerializeField] private Image m_SatForeground;
+    [SerializeField] private Image m_SatForeground = null;
     [Header("SliderValues")]
     [SerializeField] private Vector3 ColorValue = new Vector3(0, 1, 0.5f);
     
     [Header("Sliders")]
-    [SerializeField] private Slider sliderHue;
-    [SerializeField] private Slider sliderSat;
-    [SerializeField] private Slider sliderBri;
+    [SerializeField] private Slider sliderHue = null;
+    [SerializeField] private Slider sliderSat = null;
+    [SerializeField] private Slider sliderBri = null;
     
     [Header("Refs")]
-    [SerializeField] private GameObject AdditionalOptions = null;
+    [SerializeField] private GameObject additionalOptions = null;
     [SerializeField] private TextMeshProUGUI textMesh = null;
     [SerializeField] private AvatarRenderer avatar= null;
+    [SerializeField] private Animator m_animator = null;
 
     private void Awake()
     {
+        m_animator = gameObject.GetComponent<Animator>();
         AvatarRenderer.PartSelected += OnPartSelected;
     }
 
@@ -48,7 +51,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void SetAdditionalOptions(bool enable)
     {
-        AdditionalOptions.SetActive(enable);
+        additionalOptions.SetActive(enable);
     }
 
     public void UpdateForground(float value)
@@ -66,4 +69,19 @@ public class MainMenuUI : MonoBehaviour
     public void UpdateHue(float value) { ColorValue.x = value; }
     public void UpdateSat(float value) { ColorValue.y = value; }
     public void UpdateBri(float value) { ColorValue.z = value; }
+
+    public void OpenCharacterCreator()
+    {
+        m_animator.SetBool("OpenOptions", true);
+    }
+
+    public void CloseCharacterCreator()
+    {
+        m_animator.SetBool("OpenOptions", false);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Main");
+    }    
 }

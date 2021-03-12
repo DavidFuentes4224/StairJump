@@ -20,7 +20,6 @@ public class Lava : MonoBehaviour
         GameStateManager.PlayerJumped += OnPlayerJumped;
         GameStateManager.RestartGame += OnRestartGame;
         GameStateManager.StartGame += OnStartGame;
-
     }
 
     private void Start()
@@ -38,9 +37,17 @@ public class Lava : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        GameStateManager.PlayerDied -= OnPlayerDied;
+        GameStateManager.PlayerJumped -= OnPlayerJumped;
+        GameStateManager.RestartGame -= OnRestartGame;
+        GameStateManager.StartGame -= OnStartGame;
+    }
+
     private void OnStartGame()
     {
-        enabled = true;
+        this.enabled= true;
     }
 
     private void OnRestartGame()

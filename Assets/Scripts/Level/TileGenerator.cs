@@ -3,12 +3,12 @@
 public class TileGenerator : MonoBehaviour
 {
     [SerializeField]
-    private Transform[] m_tiles;
+    private Transform[] m_tiles = null;
     [SerializeField]
     private float m_turnChance = 0.55f;
     [SerializeField]
     private Vector3 m_nextPos;
-    [SerializeField] private GameStateManager m_manager;
+    [SerializeField] private GameStateManager m_manager = null;
 
     public int MAXTILES;
     public GameObject TilePrefab;
@@ -32,6 +32,13 @@ public class TileGenerator : MonoBehaviour
     private void Update()
     {
         Debug.DrawLine(Vector3.zero, m_nextPos, Color.yellow);
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.PlayerJumped -= OnPlayerJumped;
+        GameStateManager.RestartGame -= OnRestartGame;
+        GameStateManager.StartGame -= OnStartGame;
     }
 
     private void OnStartGame()

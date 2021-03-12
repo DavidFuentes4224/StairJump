@@ -24,9 +24,6 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    //LINK GAMESTATEMANAGER TO UPDATE SAVEOBJECT COIN + HIGH SCORE
-    //LINK AVATAR RENDER TO READ + WRITE TO SAVE OBJECT
-
     private void Awake()
     {
         if(!created)
@@ -36,6 +33,10 @@ public class SaveManager : MonoBehaviour
             instance = this;
         }
         m_saveObject = LoadData();
+        if (m_saveObject == null)
+        {
+            InitSave();
+        }
     }
 
     void Start()
@@ -50,14 +51,25 @@ public class SaveManager : MonoBehaviour
             m_saveObject.Score = score;
     }
 
+    public int GetHighScore()
+    {
+        return m_saveObject.Score;
+    }
+
     public void UpdateCoin(int coin)
     {
         m_saveObject.Coins = coin;
     }
 
+    public int GetCoin()
+    {
+        return m_saveObject.Coins;
+    }
+
     private void OnPlayerDied(GameStateManager.DiedEventArgs e)
     {
         UpdateCoin(e.Score);
+        UpdateCoin(e.Coins);
         SaveFile();
     }
 
@@ -76,54 +88,53 @@ public class SaveManager : MonoBehaviour
         }
         catch (IOException e)
         {
-            Debug.Log("The file could not be read:");
+            Debug.Log("File not found or can't be read:");
             Debug.Log(e.Message);
             return null;
         }
     }
 
-    public void SaveTest()
+    public void InitSave()
     {
         SaveObject saveObject = new SaveObject()
         {
-            Coins = 153,
-            Score = 42,
+            Coins = 0,
+            Score = 0,
             SelectedSprites = new SelectedSprites()
             {
-                Shirt = 1,
-                Beard = 1,
-                Hair = 1,
-                Pants = 1
+                Shirt = 0,
+                Beard = 0,
+                Hair = 0,
+                Pants = 0
             },
             Colors = new Colors
             {
-                Beard = new Vector3(0.5f, 1, 0.4f),
-                Body = new Vector3(0.5f, 1, 0.4f),
-                Eyes = new Vector3(0.5f, 1, 0.4f),
-                Hair = new Vector3(0.5f, 1, 0.4f),
-                Pants = new Vector3(0.5f, 1, 0.4f),
-                Shirt = new Vector3(0.5f, 1, 0.4f),
+                Beard = new Vector3(1f, 1f, 1f),
+                Body = new Vector3(1f, 1f, 1f),
+                Eyes = new Vector3(1f, 1f, 1f),
+                Hair = new Vector3(1f, 1f, 1f),
+                Pants = new Vector3(1f, 1f, 1f),
+                Shirt = new Vector3(1f, 1f, 1f),
             }
-        };
+        }; 
 
-        Debug.Log("Coins: " + saveObject.Coins);
-        Debug.Log("Score: " + saveObject.Score);
-        Debug.Log("Colors: " + saveObject.Colors);
-        Debug.Log("Sprites: " + saveObject.SelectedSprites);
+        m_saveObject = saveObject;
+        Debug.Log("Creating a new save");
+        SaveFile();
+    }
 
-        var json = JsonUtility.ToJson(saveObject);
-        Debug.Log("JSON: " + json);
+    public void SaveFile()
+    {
+        var json = JsonUtility.ToJson(m_saveObject);
 
-        string docPath = Application.persistentDataPath;
-
-        // Write the string array to a new file named "WriteLines.txt".
+        var docPath = Application.persistentDataPath;
         using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"{SaveName}.txt")))
         {
             outputFile.WriteLine(json);
+            Debug.Log("Saved following JSON to File at " + docPath + SaveName + ".txt" + " : \n" + json);
         }
     }
 
-    
 
     public Colors GetColors()
     {
@@ -135,18 +146,7 @@ public class SaveManager : MonoBehaviour
         return m_saveObject.SelectedSprites;
     }
 
-    public void SaveFile()
-    {
-        var json = JsonUtility.ToJson(m_saveObject);
-
-        var docPath = Application.persistentDataPath;
-        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"{SaveName}.txt")))
-        {
-            outputFile.WriteLine(json);
-            Debug.Log("Saved following JSON to File at "+ docPath + SaveName + ".txt" + " : \n" + json);
-        }
-    }
-
+    
     public void UpdateSprites(int m_selectedHair, int m_selectedBeard)
     {
         m_saveObject.SelectedSprites.Hair = m_selectedHair;

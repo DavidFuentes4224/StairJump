@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool m_isJumping;
     [SerializeField]
-    private SpriteRenderer[] SpriteLayers = new SpriteRenderer[6];
+    private GameObject m_avatar;
 
     private Animator m_animator;
     private bool m_should_jump;
@@ -47,6 +47,13 @@ public class Player : MonoBehaviour
         enabled = false;
     }
 
+    private void OnDestroy()
+    {
+        GameStateManager.PlayerDied -= OnPlayerDied;
+        GameStateManager.RestartGame -= OnRestartGame;
+        GameStateManager.StartGame -= OnStartGame;
+    }
+
     private void OnStartGame()
     {
         enabled = true;
@@ -56,6 +63,7 @@ public class Player : MonoBehaviour
     {
         ConfigureSettings();
         transform.position = originalStart;
+        transform.localScale = Vector3.one;
         enabled = false;
     }
 
@@ -68,9 +76,7 @@ public class Player : MonoBehaviour
         m_rayDistance = 0.55f;
         m_animator.enabled = true;
         m_rigidbody.velocity = Vector3.zero;
-        m_rigidbody.simulated = false;
-        //transform.localScale = new Vector3(-m_direction, 1);
-
+        m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
     }
 
     void Update()
@@ -109,10 +115,7 @@ public class Player : MonoBehaviour
     public void HandleTurn()
     {
         //transform.localScale = new Vector3(m_direction, 1);
-        foreach(var spritelayer in SpriteLayers)
-        {
-            spritelayer.flipX = !spritelayer.flipX;
-        }
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         m_direction *= -1;
         HandleJump();
     }
@@ -171,7 +174,7 @@ public class Player : MonoBehaviour
     private void OnPlayerDied(GameStateManager.DiedEventArgs e)
     {
         m_isAlive = false;
-        m_rigidbody.simulated = true;
+        m_rigidbody.bodyType = RigidbodyType2D.Dynamic;
         m_animator.enabled = false;
     }
 }

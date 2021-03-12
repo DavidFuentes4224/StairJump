@@ -5,11 +5,11 @@ using UnityEngine;
 public class AudioEngine : MonoBehaviour
 {
     [SerializeField]
-    private AudioSource jumpsource;
+    private AudioSource jumpsource = null;
     [SerializeField]
-    private AudioSource coinsource;
+    private AudioSource coinsource = null;
     [SerializeField]
-    private AudioSource failsource;
+    private AudioSource failsource = null;
 
 
     // Start is called before the first frame update
@@ -17,6 +17,12 @@ public class AudioEngine : MonoBehaviour
     {
         GameStateManager.PlayerJumped += OnPlayerJumped;
         GameStateManager.PlayerDied += OnPlayerDied;
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.PlayerJumped -= OnPlayerJumped;
+        GameStateManager.PlayerDied -= OnPlayerDied;
     }
 
     private void OnPlayerDied(GameStateManager.DiedEventArgs e)

@@ -9,6 +9,7 @@ public class Coin : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             GameStateManager.OnCoinPickup();
+            gameObject.SetActive(false);
         }
     }
 }
