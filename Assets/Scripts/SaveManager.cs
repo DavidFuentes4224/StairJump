@@ -9,7 +9,7 @@ using static AvatarRenderer;
 public class SaveManager : MonoBehaviour
 {
     [SerializeField]
-    private string SaveName;
+    private string SaveName = null;
     [SerializeField]
     private static bool created = false;
     [SerializeField]

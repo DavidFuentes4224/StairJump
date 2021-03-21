@@ -136,6 +136,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (gameRunning)
             return;
+        gameRunning = true;
         OnStartGame();
     }
 

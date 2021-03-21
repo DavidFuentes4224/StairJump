@@ -17,7 +17,10 @@ public class AudioEngine : MonoBehaviour
     {
         GameStateManager.PlayerJumped += OnPlayerJumped;
         GameStateManager.PlayerDied += OnPlayerDied;
+        GameStateManager.CoinPickup += OnCoinPickup;
     }
+
+    
 
     private void OnDestroy()
     {
@@ -33,5 +36,10 @@ public class AudioEngine : MonoBehaviour
     private void OnPlayerJumped(GameStateManager.JumpEventArgs obj)
     {
         jumpsource.Play();
+    }
+
+    private void OnCoinPickup()
+    {
+        coinsource.Play();
     }
 }

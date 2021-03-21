@@ -22,6 +22,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textMesh = null;
     [SerializeField] private AvatarRenderer avatar= null;
     [SerializeField] private Animator m_animator = null;
+    [SerializeField] private GameObject m_saveIcon = null;
 
     private void Awake()
     {
@@ -38,7 +39,11 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         SetAdditionalOptions(false);
+    }
 
+    public void SetSaved(bool value)
+    {
+        m_saveIcon.SetActive(value);
     }
 
     private void ConfigureSliders(ref AvatarRenderer.PartSelectedArgs e)

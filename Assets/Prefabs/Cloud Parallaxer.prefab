@@ -434,6 +434,6 @@ MonoBehaviour:
   - {fileID: 4678931062926015514}
   - {fileID: 4678931062287429008}
   m_targetOffset: {x: 0, y: 0}
-  globalSpeedModifier: -0.1
+  globalSpeedModifier: -0.05
   autoScroll: 1
   autoScrollDirection: {x: 0.1, y: 0.2}
