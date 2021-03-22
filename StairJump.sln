@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeShare.Runtime", "NativeShare.Runtime.csproj", "{AFD48707-59EF-2348-B679-B0ED3545BEEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{DF29EFAA-152C-85B2-5726-36D40923D5E8}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeShare.Editor", "NativeShare.Editor.csproj", "{4E7F841F-71BD-780C-A129-EEFFCC39945F}"
 EndProject
 Global
@@ -21,6 +23,10 @@ Global
 		{AFD48707-59EF-2348-B679-B0ED3545BEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFD48707-59EF-2348-B679-B0ED3545BEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFD48707-59EF-2348-B679-B0ED3545BEEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF29EFAA-152C-85B2-5726-36D40923D5E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF29EFAA-152C-85B2-5726-36D40923D5E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF29EFAA-152C-85B2-5726-36D40923D5E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF29EFAA-152C-85B2-5726-36D40923D5E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E7F841F-71BD-780C-A129-EEFFCC39945F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E7F841F-71BD-780C-A129-EEFFCC39945F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E7F841F-71BD-780C-A129-EEFFCC39945F}.Release|Any CPU.ActiveCfg = Release|Any CPU
