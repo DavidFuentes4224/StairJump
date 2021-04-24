@@ -26,6 +26,8 @@ public class AudioEngine : MonoBehaviour
     {
         GameStateManager.PlayerJumped -= OnPlayerJumped;
         GameStateManager.PlayerDied -= OnPlayerDied;
+        GameStateManager.CoinPickup -= OnCoinPickup;
+
     }
 
     private void OnPlayerDied(GameStateManager.DiedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -9,7 +10,6 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject TapToStart = null;
-    [SerializeField] private GameStateManager m_manager = null;
 
     [Header("Score Board")]
     [SerializeField] private GameObject ScorePanel = null;
@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coins = null;
     [SerializeField] private Sprite[] medalIcons = null;
     [SerializeField] private Image medal = null;
+    [SerializeField] private Button bttnContinue = null;
+    [SerializeField] private GameObject PopupPanel = null;
 
     void Start()
     {
@@ -30,9 +32,12 @@ public class UIManager : MonoBehaviour
         GameStateManager.PlayerDied += OnPlayerDied;
         GameStateManager.PlayerLanded += OnPlayerLanded;
         GameStateManager.RestartGame += OnRestartGame;
+        GameStateManager.ContinueGame += OnContinueGame;
         ScorePanel.SetActive(false);
         TapToStart.SetActive(true);
     }
+
+    
 
     public void ResetButtons()
     {
@@ -46,12 +51,25 @@ public class UIManager : MonoBehaviour
         backButton.localScale = Utils.FlipLocalScale(backButton.localScale);
     }
 
+    public void TryStartGame()
+    {
+        GameStateManager.Instance.HandleStartGame();
+    }
+
+    public void TryRestartGame()
+    {
+        GameStateManager.Instance.HandleRestart();
+
+    }
+
     private void OnDestroy()
     {
         GameStateManager.StartGame -= OnStartGame;
         GameStateManager.PlayerDied -= OnPlayerDied;
         GameStateManager.PlayerLanded -= OnPlayerLanded;
         GameStateManager.RestartGame -= OnRestartGame;
+        GameStateManager.ContinueGame -= OnContinueGame;
+
     }
 
     private void OnStartGame()
@@ -67,24 +85,69 @@ public class UIManager : MonoBehaviour
         ResetButtons();
     }
 
+    private void OnContinueGame()
+    {
+        OnRestartGame();
+    }
+
     private void OnPlayerLanded()
     {
         SetText();
     }
 
+    public void TryContinue()
+    {
+        GameStateManager.OnContinueGame();
+    }
+
     private void SetText()
     {
-        HighScore.text = $"High Score: {m_manager.GetHeight()}";
+        HighScore.text = $"Score: {GameStateManager.Instance.GetHeight()}";
     }
+
+    // create methods for starting ad
+    // create method for closing popup
+    // create logic for determining when to have popup show
+    // -> always if coins is < 20 away from being able to continue
 
     private void OnPlayerDied(GameStateManager.DiedEventArgs e)
     {
         TapToStart.SetActive(false);
+
+        SetDisplays(e);
+
+         if (25 - e.Coins < 10)
+            PopupPanel.SetActive(true);
+
+        CheckIfCanContinue();
+
+        ScorePanel.SetActive(true);
+    }
+
+    private void CheckIfCanContinue()
+    {
+        bttnContinue.interactable = GameStateManager.Instance.GetCoins() >= 25 && GameStateManager.Instance.GetGameCanContinue();
+    }
+
+    public void TryStartPopup()
+    {
+        AdManager.Instance.PlayRewardAd();
+        CheckIfCanContinue();
+        ClosePopup();
+    }
+
+    public void ClosePopup()
+    {
+        PopupPanel.SetActive(false);
+    }
+
+    private void SetDisplays(GameStateManager.DiedEventArgs e)
+    {
         var score = e.Score.ToString();
         currentScore.text = score;
         coins.text = e.Coins.ToString();
         var best = SaveManager.Instance.GetHighScore();
-        if(e.Score > best)
+        if (e.Score > best)
         {
             bestScore.text = score;
             SaveManager.Instance.UpdateScore(e.Score);
@@ -93,9 +156,9 @@ public class UIManager : MonoBehaviour
         {
             bestScore.text = best.ToString();
         }
+
         Sprite medalImage = GetMedalImage(e.Score);
         medal.sprite = medalImage;
-        ScorePanel.SetActive(true);
     }
 
     private Sprite GetMedalImage(int score)
@@ -140,6 +203,7 @@ public class UIManager : MonoBehaviour
 
     public void Quit()
     {
+        GameStateManager.Instance.HandleQuit();
         SceneManager.LoadScene("Main Menu");
     }
 }

@@ -44,14 +44,19 @@ public class Player : MonoBehaviour
         GameStateManager.PlayerDied += OnPlayerDied;
         GameStateManager.RestartGame += OnRestartGame;
         GameStateManager.StartGame += OnStartGame;
+        GameStateManager.ContinueGame += OnContinueGame;
+
         enabled = false;
     }
+
 
     private void OnDestroy()
     {
         GameStateManager.PlayerDied -= OnPlayerDied;
         GameStateManager.RestartGame -= OnRestartGame;
         GameStateManager.StartGame -= OnStartGame;
+        GameStateManager.ContinueGame -= OnContinueGame;
+
     }
 
     private void OnStartGame()
@@ -66,6 +71,13 @@ public class Player : MonoBehaviour
         transform.localScale = Vector3.one;
         enabled = false;
     }
+
+    private void OnContinueGame()
+    {
+        OnRestartGame();
+        //enabled = true;
+    }
+
 
     private void ConfigureSettings()
     {

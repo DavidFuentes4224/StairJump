@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ColorManager;
 
 public class AvatarRenderer : MonoBehaviour
 {
@@ -34,6 +35,20 @@ public class AvatarRenderer : MonoBehaviour
         public PartSelectedArgs(Color color)
         {
             partColor = color;
+        }
+    }
+
+    private void Awake()
+    {
+        ColorSelected += OnColorSelected;
+    }
+
+    private void OnColorSelected(ColorSelectedArgs e)
+    {
+        SpriteRenderer spriteRender;
+        if (m_SpriteColorByPartName.TryGetValue(m_selectedPart, out spriteRender))
+        {
+            spriteRender.color = e.color;
         }
     }
 
@@ -96,48 +111,6 @@ public class AvatarRenderer : MonoBehaviour
                     break; 
                 }
             default: { break; }
-        }
-    }
-
-    public void UpdateColor(float value)
-    {
-        SpriteRenderer spriteRender;
-        Debug.Log("updating");
-        if (m_SpriteColorByPartName.TryGetValue(m_selectedPart, out spriteRender))
-        {
-            Debug.Log("found value");
-            float h, s, v;
-            Color.RGBToHSV(spriteRender.color, out h, out s, out v);
-            spriteRender.color = Color.HSVToRGB(value, s, v);
-
-        }
-    }
-
-    public void UpdateSatr(float value)
-    {
-        SpriteRenderer spriteRender;
-        Debug.Log("updating");
-        if (m_SpriteColorByPartName.TryGetValue(m_selectedPart, out spriteRender))
-        {
-            Debug.Log("found value");
-            float h, s, v;
-            Color.RGBToHSV(spriteRender.color, out h, out s, out v);
-            spriteRender.color = Color.HSVToRGB(h, value, v);
-
-        }
-    }
-
-    public void UpdateBrightness(float value)
-    {
-        SpriteRenderer spriteRender;
-        Debug.Log("updating");
-        if (m_SpriteColorByPartName.TryGetValue(m_selectedPart, out spriteRender))
-        {
-            Debug.Log("found value");
-            float h, s, v;
-            Color.RGBToHSV(spriteRender.color, out h, out s, out v);
-            spriteRender.color = Color.HSVToRGB(h, s, value);
-
         }
     }
 

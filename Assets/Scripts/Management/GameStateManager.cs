@@ -7,20 +7,19 @@ using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour
 {
-    [SerializeField]
-    private int m_currentScore;
-    [SerializeField]
-    private int m_currentCoin;
-    [SerializeField]
-    private bool gameRunning = false;
-    [SerializeField]
-    private static bool created = false;
+    [SerializeField] private int m_currentScore;
+    [SerializeField] private int m_currentCoin;
+    [SerializeField] private bool gameRunning = false;
+    [SerializeField] private bool gameContinuedAlready = false;
+    [SerializeField] private static bool created = false;
+    [SerializeField] private int REWARDBONUS = 10;
 
     public static event Action<JumpEventArgs> PlayerJumped;
     public static event Action PlayerLanded;
     public static event Action<DiedEventArgs> PlayerDied;
     public static event Action RestartGame;
     public static event Action StartGame;
+    public static event Action ContinueGame;
     public static event Action CoinPickup;
 
     public static Player PlayerRef;
@@ -65,6 +64,10 @@ public class GameStateManager : MonoBehaviour
             created = true;
             instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -72,7 +75,6 @@ public class GameStateManager : MonoBehaviour
         m_currentScore = 0;
         m_currentCoin = SaveManager.Instance.GetCoin();
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
-        PlayerLanded += M_OnPlayerLanded;
         CoinPickup += M_OnCoinPickup;
     }
 
@@ -83,7 +85,6 @@ public class GameStateManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        PlayerLanded -= M_OnPlayerLanded;
         CoinPickup -= M_OnCoinPickup;
     }
 
@@ -96,6 +97,7 @@ public class GameStateManager : MonoBehaviour
     public static void OnPlayerLanded()
     {
         Debug.Log("EVENT: Landed");
+        GameStateManager.instance.UpdateScore();
         PlayerLanded?.Invoke();
     }
 
@@ -109,6 +111,7 @@ public class GameStateManager : MonoBehaviour
     public static void OnRestartGame()
     {
         Debug.Log("EVENT: Restarted");
+        Instance.gameContinuedAlready = false;
         RestartGame?.Invoke();
     }
 
@@ -116,6 +119,18 @@ public class GameStateManager : MonoBehaviour
     {
         Debug.Log("EVENT: Started");
         StartGame?.Invoke();
+    }
+
+    public static void OnContinueGame()
+    {
+        Debug.Log("EVENT: Continued");
+        if (Instance.m_currentCoin > 25)
+        {
+            Instance.m_currentCoin -= 25;
+            Instance.gameRunning = false;
+            Instance.gameContinuedAlready = true;
+            ContinueGame?.Invoke();
+        }
     }
 
     public static void OnCoinPickup()
@@ -149,6 +164,13 @@ public class GameStateManager : MonoBehaviour
         gameRunning = false;
     }
 
+    public void HandleQuit()
+    {
+        gameRunning = false;
+        m_currentScore = 0;
+        gameContinuedAlready = false;
+    }
+
     private void UpdateScore()
     {
         m_currentScore += 1;
@@ -159,13 +181,23 @@ public class GameStateManager : MonoBehaviour
         return m_currentScore;
     }
 
-    private void M_OnPlayerLanded()
+    public int GetCoins()
     {
-        UpdateScore();
+        return m_currentCoin;
+    }
+
+    public bool GetGameCanContinue()
+    {
+        return !gameContinuedAlready;
     }
 
     private void M_OnCoinPickup()
     {
         m_currentCoin++;
+    }
+
+    public void RewardPlayer()
+    {
+        m_currentCoin += 25;
     }
 }

@@ -20,6 +20,8 @@ public class Lava : MonoBehaviour
         GameStateManager.PlayerJumped += OnPlayerJumped;
         GameStateManager.RestartGame += OnRestartGame;
         GameStateManager.StartGame += OnStartGame;
+        GameStateManager.ContinueGame += OnContinueGame;
+
     }
 
     private void Start()
@@ -43,6 +45,8 @@ public class Lava : MonoBehaviour
         GameStateManager.PlayerJumped -= OnPlayerJumped;
         GameStateManager.RestartGame -= OnRestartGame;
         GameStateManager.StartGame -= OnStartGame;
+        GameStateManager.ContinueGame -= OnContinueGame;
+
     }
 
     private void OnStartGame()
@@ -55,6 +59,11 @@ public class Lava : MonoBehaviour
         transform.position = m_originalFirePosition;
         playerAlive = true;
         enabled = false;
+    }
+
+    private void OnContinueGame()
+    {
+        OnRestartGame();
     }
 
     private void OnPlayerDied(GameStateManager.DiedEventArgs e)

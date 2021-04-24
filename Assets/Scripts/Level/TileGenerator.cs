@@ -2,13 +2,10 @@
 
 public class TileGenerator : MonoBehaviour
 {
-    [SerializeField]
-    private Transform[] m_tiles = null;
-    [SerializeField]
-    private float m_turnChance = 0.55f;
-    [SerializeField]
-    private Vector3 m_nextPos;
-    [SerializeField] private GameStateManager m_manager = null;
+    [SerializeField] private Transform[] m_tiles = null;
+    [SerializeField] private float m_turnChance = 0.55f;
+    [SerializeField] private Vector3 m_nextPos;
+    [SerializeField] private int m_lastJumpDirection = 0;
 
     public int MAXTILES;
     public GameObject TilePrefab;
@@ -21,6 +18,7 @@ public class TileGenerator : MonoBehaviour
         GameStateManager.PlayerJumped += OnPlayerJumped;
         GameStateManager.RestartGame += OnRestartGame;
         GameStateManager.StartGame += OnStartGame;
+        GameStateManager.ContinueGame += OnContinueGame;
     }
 
     private void Start()
@@ -39,6 +37,8 @@ public class TileGenerator : MonoBehaviour
         GameStateManager.PlayerJumped -= OnPlayerJumped;
         GameStateManager.RestartGame -= OnRestartGame;
         GameStateManager.StartGame -= OnStartGame;
+        GameStateManager.ContinueGame -= OnContinueGame;
+
     }
 
     private void OnStartGame()
@@ -58,8 +58,15 @@ public class TileGenerator : MonoBehaviour
 
     private void OnPlayerJumped(GameStateManager.JumpEventArgs e)
     {
-        UpdateTiles(e.Direction);
+        m_lastJumpDirection = -e.Direction;
+        UpdateTiles(e.Direction,1);
     }
+
+    private void OnContinueGame()
+    {
+        UpdateTiles(m_lastJumpDirection, -1);
+    }
+
 
     private void GenerateTiles()
     {
@@ -79,7 +86,7 @@ public class TileGenerator : MonoBehaviour
         m_nextPos = currentPosition;
     }
 
-    public void UpdateTiles(int direction)
+    public void UpdateTiles(int direction, int up)
     {
         for (int i = 0; i < m_tiles.Length; i++)
         {
@@ -96,9 +103,9 @@ public class TileGenerator : MonoBehaviour
                     tile.gameObject.SetActive(false);
                 }
             }
-            tileRef.UpdateTarget(Settings.DISTANCE * direction);
+            tileRef.UpdateTarget(Settings.DISTANCE * direction, up);
         }
-        m_nextPos += new Vector3(Settings.DISTANCE * direction, -Settings.HEIGHT);
+        m_nextPos += new Vector3(Settings.DISTANCE * direction, -Settings.HEIGHT * up);
         //Background.UpdateTargetOffset(Settings.DISTANCE * direction);
     }
 
@@ -109,7 +116,7 @@ public class TileGenerator : MonoBehaviour
         tile.position = m_nextPos;
         tileRef.ResetTarget();
         tileRef.TrySpawnCoin();
-        tileRef.SetTexture(m_manager.GetHeight());
+        tileRef.SetTexture(GameStateManager.Instance.GetHeight());
 
 
         tile.gameObject.SetActive(true);

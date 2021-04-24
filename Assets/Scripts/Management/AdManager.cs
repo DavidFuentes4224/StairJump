@@ -12,11 +12,30 @@ public class AdManager : MonoBehaviour , IUnityAdsListener
     private string rewardAd = "Rewarded_iOS";
 
     [SerializeField] private bool isTestAd = false;
+    [SerializeField] private static bool created = false;
+
+    private static AdManager instance;
+    public static AdManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
 
     private void Awake()
     {
-        GameStateManager.PlayerDied += OnPlayerDied;
         GameStateManager.StartGame += OnStartGame;
+        if (!created)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            created = true;
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnStartGame()
@@ -27,14 +46,6 @@ public class AdManager : MonoBehaviour , IUnityAdsListener
     private void Start()
     {
         InitializeAd();
-    }
-
-    private void OnPlayerDied(GameStateManager.DiedEventArgs obj)
-    {
-        if (obj.Score > 25)
-        {
-            PlayRewardAd();
-        }
     }
 
     private void InitializeAd()
@@ -83,5 +94,16 @@ public class AdManager : MonoBehaviour , IUnityAdsListener
     {
         //Switch on showresult
         //throw new System.NotImplementedException();
+        switch (showResult)
+        {
+            case ShowResult.Failed:
+                GameStateManager.Instance.RewardPlayer();
+                break;
+            case ShowResult.Skipped:
+                break;
+            case ShowResult.Finished:
+                GameStateManager.Instance.RewardPlayer();
+                break;
+        }
     }
 }
