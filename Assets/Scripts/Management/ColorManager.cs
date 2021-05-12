@@ -8,7 +8,7 @@ public class ColorManager : MonoBehaviour
 {
     [SerializeField] ColorButton[] buttons = null;
     [Header("Config")]
-    [SerializeField] int MAXBUTTONS = 50;
+    [SerializeField] int MAXBUTTONS = 64;
     [SerializeField] Transform colorButtonPrefab = null;
 
     [Header("Colors")]

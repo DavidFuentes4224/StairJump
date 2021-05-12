@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
@@ -53,10 +51,13 @@ public class Tile : MonoBehaviour
 
     public void SetTexture(int height)
     {
-        if (height > 100) m_renderer.sprite = textures[3];
-        else if (height > 50) m_renderer.sprite = textures[2];
-        else if (height > 25) m_renderer.sprite = textures[1];
-        else if (height == 0) m_renderer.sprite = textures[4];
+        //if (height > 100) m_renderer.sprite = textures[3];
+        //else if (height > 50) m_renderer.sprite = textures[2];
+        //else if (height > 25) m_renderer.sprite = textures[1];
+        //else if (height == 0) m_renderer.sprite = textures[4];
+        //else m_renderer.sprite = textures[0];
+
+        if (height == 0) m_renderer.sprite = textures[4];
         else m_renderer.sprite = textures[0];
     }
 }

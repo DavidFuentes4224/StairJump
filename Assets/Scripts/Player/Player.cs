@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -26,7 +22,6 @@ public class Player : MonoBehaviour
     private Vector3 originalStart;
 
     public Transform RayOrigin;
-    public TileGenerator TileGenerator;
     public LayerMask CollisionMask;
 
 

@@ -41,10 +41,13 @@ public class SaveManager : MonoBehaviour
         {
             InitSave();
         }
+        Application.targetFrameRate = Screen.currentResolution.refreshRate;
+
     }
 
     void Start()
     {
+
         GameStateManager.PlayerDied += OnPlayerDied;
         //SaveTest();
     }

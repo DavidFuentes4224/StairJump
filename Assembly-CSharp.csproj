@@ -111,7 +111,6 @@
     <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeRealtimeMultiplayerClient.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesScore.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\SignInStatus.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerInput.cs" />
     <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\EditorLeaderboardUtils.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\SavedGame\ISavedGameClient.cs" />
     <Compile Include="Assets\Extensions\CloudOnce\Providers\GooglePlayGames\GooglePlayGamesCloudProvider.cs" />
@@ -160,6 +159,7 @@
     <Compile Include="Assets\Scripts\UI\MainMenuUI.cs" />
     <Compile Include="Assets\Scripts\Management\GameStateManager.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Nearby\DummyNearbyConnectionClient.cs" />
+    <Compile Include="Assets\Scripts\Color Palettes\ColorButton.cs" />
     <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\CloudPrefs\PersistentValue.cs" />
     <Compile Include="Assets\Extensions\CloudOnce\Data\Achievements.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Video\VideoCapabilities.cs" />
@@ -225,7 +225,6 @@
     <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudBool.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeTurnBasedMultiplayerClient.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\CommonStatusCodes.cs" />
-    <Compile Include="Assets\Scripts\Color Palettes\ColorButton.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

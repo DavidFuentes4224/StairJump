@@ -45,6 +45,7 @@ public class AdManager : MonoBehaviour , IUnityAdsListener
 
     private void Start()
     {
+        Advertisement.AddListener(this);
         InitializeAd();
     }
 
@@ -86,24 +87,25 @@ public class AdManager : MonoBehaviour , IUnityAdsListener
 
     public void OnUnityAdsDidStart(string placementId)
     {
-        //MUTE AUDIO HERE
         //throw new System.NotImplementedException();
     }
 
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
-        //Switch on showresult
-        //throw new System.NotImplementedException();
-        switch (showResult)
+        Debug.Log("Ad finished" + showResult);
+        if(placementId == rewardAd)
         {
-            case ShowResult.Failed:
-                GameStateManager.Instance.RewardPlayer();
-                break;
-            case ShowResult.Skipped:
-                break;
-            case ShowResult.Finished:
-                GameStateManager.Instance.RewardPlayer();
-                break;
-        }
+            switch (showResult)
+            {
+                case ShowResult.Failed:
+                    GameStateManager.Instance.RewardPlayer();
+                    break;
+                case ShowResult.Skipped:
+                    break;
+                case ShowResult.Finished:
+                    GameStateManager.Instance.RewardPlayer();
+                    break;
+            }
+        }  
     }
 }

@@ -33,11 +33,25 @@ public class UIManager : MonoBehaviour
         GameStateManager.PlayerLanded += OnPlayerLanded;
         GameStateManager.RestartGame += OnRestartGame;
         GameStateManager.ContinueGame += OnContinueGame;
+        GameStateManager.PlayerRewarded += OnPlayerRewarded;
         ScorePanel.SetActive(false);
         TapToStart.SetActive(true);
     }
 
-    
+    private void OnDestroy()
+    {
+        GameStateManager.StartGame -= OnStartGame;
+        GameStateManager.PlayerDied -= OnPlayerDied;
+        GameStateManager.PlayerLanded -= OnPlayerLanded;
+        GameStateManager.RestartGame -= OnRestartGame;
+        GameStateManager.ContinueGame -= OnContinueGame;
+        GameStateManager.PlayerRewarded -= OnPlayerRewarded;
+    }
+
+    private void OnPlayerRewarded(GameStateManager.RewardedEventArgs e)
+    {
+        SetCoinDisplay(e.Coins);
+    }
 
     public void ResetButtons()
     {
@@ -59,16 +73,6 @@ public class UIManager : MonoBehaviour
     public void TryRestartGame()
     {
         GameStateManager.Instance.HandleRestart();
-
-    }
-
-    private void OnDestroy()
-    {
-        GameStateManager.StartGame -= OnStartGame;
-        GameStateManager.PlayerDied -= OnPlayerDied;
-        GameStateManager.PlayerLanded -= OnPlayerLanded;
-        GameStateManager.RestartGame -= OnRestartGame;
-        GameStateManager.ContinueGame -= OnContinueGame;
 
     }
 
@@ -145,7 +149,7 @@ public class UIManager : MonoBehaviour
     {
         var score = e.Score.ToString();
         currentScore.text = score;
-        coins.text = e.Coins.ToString();
+        SetCoinDisplay(e.Coins);
         var best = SaveManager.Instance.GetHighScore();
         if (e.Score > best)
         {
@@ -159,6 +163,12 @@ public class UIManager : MonoBehaviour
 
         Sprite medalImage = GetMedalImage(e.Score);
         medal.sprite = medalImage;
+    }
+
+    private void SetCoinDisplay(int c)
+    {
+        Debug.Log("Updating coin display to " + c);
+        coins.text = c.ToString();
     }
 
     private Sprite GetMedalImage(int score)

@@ -21,6 +21,7 @@ public class GameStateManager : MonoBehaviour
     public static event Action StartGame;
     public static event Action ContinueGame;
     public static event Action CoinPickup;
+    public static event Action<RewardedEventArgs> PlayerRewarded;
 
     public static Player PlayerRef;
 
@@ -32,6 +33,16 @@ public class GameStateManager : MonoBehaviour
         public JumpEventArgs(int direction)
         {
             Direction = direction;
+        }
+    }
+
+    public class RewardedEventArgs : EventArgs
+    {
+        public int Coins { get; }
+
+        public RewardedEventArgs(int c)
+        {
+            Coins = c;
         }
     }
 
@@ -74,7 +85,6 @@ public class GameStateManager : MonoBehaviour
     {
         m_currentScore = 0;
         m_currentCoin = SaveManager.Instance.GetCoin();
-        Application.targetFrameRate = Screen.currentResolution.refreshRate;
         CoinPickup += M_OnCoinPickup;
     }
 
@@ -138,7 +148,14 @@ public class GameStateManager : MonoBehaviour
         Debug.Log("EVENT: Coin picked up");
         CoinPickup?.Invoke();
     }
-    
+
+    public void RewardPlayer()
+    {
+        m_currentCoin += 25;
+        SaveManager.Instance.UpdateCoin(m_currentCoin);
+        PlayerRewarded?.Invoke(new RewardedEventArgs(m_currentCoin));
+    }
+
     private void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.R))
@@ -194,10 +211,5 @@ public class GameStateManager : MonoBehaviour
     private void M_OnCoinPickup()
     {
         m_currentCoin++;
-    }
-
-    public void RewardPlayer()
-    {
-        m_currentCoin += 25;
     }
 }
