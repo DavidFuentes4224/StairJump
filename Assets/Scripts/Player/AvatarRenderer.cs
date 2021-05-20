@@ -66,6 +66,12 @@ public class AvatarRenderer : MonoBehaviour
         LoadSprites();
     }
 
+    private void OnDestroy()
+    {
+        ColorSelected -= OnColorSelected;
+
+    }
+
     private void LoadSprites()
     {
         var sprites = SaveManager.Instance.GetSelectedSprites();

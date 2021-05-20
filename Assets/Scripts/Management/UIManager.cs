@@ -120,9 +120,9 @@ public class UIManager : MonoBehaviour
 
         SetDisplays(e);
 
-         if (25 - e.Coins < 10)
-            PopupPanel.SetActive(true);
-
+        //improve logic for if reward ad pops up
+        var active = GameStateManager.Instance.GetCanBeRewarded();
+        PopupPanel.SetActive(active);
         CheckIfCanContinue();
 
         ScorePanel.SetActive(true);

@@ -12,7 +12,10 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private bool gameRunning = false;
     [SerializeField] private bool gameContinuedAlready = false;
     [SerializeField] private static bool created = false;
-    [SerializeField] private int REWARDBONUS = 10;
+    [SerializeField] private const int REWARDBONUS = 10;
+    [SerializeField] private const int CONTINUEAMOUNT = 10;
+    [SerializeField] private const int MAXREWARDCOOLDOWN = 250;
+    [SerializeField] private int RewardCooldown = 0;
 
     public static event Action<JumpEventArgs> PlayerJumped;
     public static event Action PlayerLanded;
@@ -86,6 +89,7 @@ public class GameStateManager : MonoBehaviour
         m_currentScore = 0;
         m_currentCoin = SaveManager.Instance.GetCoin();
         CoinPickup += M_OnCoinPickup;
+        RewardCooldown = MAXREWARDCOOLDOWN;
     }
 
     void Update()
@@ -108,6 +112,7 @@ public class GameStateManager : MonoBehaviour
     {
         Debug.Log("EVENT: Landed");
         GameStateManager.instance.UpdateScore();
+        Instance.HandleLand();
         PlayerLanded?.Invoke();
     }
 
@@ -134,9 +139,9 @@ public class GameStateManager : MonoBehaviour
     public static void OnContinueGame()
     {
         Debug.Log("EVENT: Continued");
-        if (Instance.m_currentCoin > 25)
+        if (Instance.m_currentCoin > CONTINUEAMOUNT)
         {
-            Instance.m_currentCoin -= 25;
+            Instance.m_currentCoin -= CONTINUEAMOUNT;
             Instance.gameRunning = false;
             Instance.gameContinuedAlready = true;
             ContinueGame?.Invoke();
@@ -151,7 +156,9 @@ public class GameStateManager : MonoBehaviour
 
     public void RewardPlayer()
     {
-        m_currentCoin += 25;
+        m_currentCoin += REWARDBONUS;
+        if (RewardCooldown <= 0)
+            RewardCooldown = MAXREWARDCOOLDOWN - 100;
         SaveManager.Instance.UpdateCoin(m_currentCoin);
         PlayerRewarded?.Invoke(new RewardedEventArgs(m_currentCoin));
     }
@@ -188,6 +195,11 @@ public class GameStateManager : MonoBehaviour
         gameContinuedAlready = false;
     }
 
+    private void HandleLand()
+    {
+        RewardCooldown -= 1;
+    }
+
     private void UpdateScore()
     {
         m_currentScore += 1;
@@ -206,6 +218,16 @@ public class GameStateManager : MonoBehaviour
     public bool GetGameCanContinue()
     {
         return !gameContinuedAlready;
+    }
+
+    public bool GetCanBeRewarded()
+    {
+        var canBeRewared = false;
+        if (Instance.GetGameCanContinue() && (Instance.GetCoins() - CONTINUEAMOUNT < REWARDBONUS))
+            canBeRewared = true;
+        else if (RewardCooldown <= 0)
+            canBeRewared = true;
+        return canBeRewared;
     }
 
     private void M_OnCoinPickup()

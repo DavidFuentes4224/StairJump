@@ -38,6 +38,7 @@ public class ColorManager : MonoBehaviour
     private void Start()
     {
         CreateColors();
+        UpdateColors(skinPalette);
     }
 
     private void CreateColors()
