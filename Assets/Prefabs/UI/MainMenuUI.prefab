@@ -1796,11 +1796,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons: []
-  MAXBUTTONS: 64
+  MAXBUTTONS: 100
   colorButtonPrefab: {fileID: 7352265552580413351, guid: b5ab551fd06f6cb498aaf21787fb56ee,
     type: 3}
   skinPalette: {fileID: 11400000, guid: 83f7a1856318c654eab3d9d95ef383e3, type: 2}
-  mainPalette: {fileID: 11400000, guid: 06304f853a770374094c3fd79a3d7a06, type: 2}
+  mainPalette: {fileID: 11400000, guid: 6d631ad99c822754f9acff52348c5c1c, type: 2}
 --- !u!1 &2130338454416191141
 GameObject:
   m_ObjectHideFlags: 0

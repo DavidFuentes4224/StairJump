@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image medal = null;
     [SerializeField] private Button bttnContinue = null;
     [SerializeField] private GameObject PopupPanel = null;
+    [SerializeField] private GameObject ContinuePanel = null;
 
     void Start()
     {
@@ -140,9 +141,19 @@ public class UIManager : MonoBehaviour
         ClosePopup();
     }
 
+    public void ToggleContinuePopup(bool visible)
+    {
+        ContinuePanel.SetActive(visible);
+    }
+
     public void ClosePopup()
     {
         PopupPanel.SetActive(false);
+    }
+
+    public void CloseContinuePopup()
+    {
+
     }
 
     private void SetDisplays(GameStateManager.DiedEventArgs e)

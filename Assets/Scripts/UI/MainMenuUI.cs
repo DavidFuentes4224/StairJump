@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static ColorManager;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -22,6 +23,12 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         SetAdditionalOptions(false);
+        ColorManager.ColorSelected += OnColorSelected;
+    }
+
+    private void OnColorSelected(ColorSelectedArgs e)
+    {
+        SetSaved(false);
     }
 
     public void SetSaved(bool value)

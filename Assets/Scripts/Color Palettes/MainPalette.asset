@@ -12,194 +12,395 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ec41e5940355945ae3f042bc291bb3, type: 3}
   m_Name: MainPalette
   m_EditorClassIdentifier: 
-  PalletName: 
+  PalletName: Main
   Colors:
-  - R: 46
+  - m_color:
+      serializedVersion: 2
+      rgba: 4294967295
+    R: 255
+    G: 255
+    B: 255
+  - m_color:
+      serializedVersion: 2
+      rgba: 4278190080
+    R: 0
+    G: 0
+    B: 0
+  - m_color:
+      serializedVersion: 2
+      rgba: 4281286702
+    R: 46
     G: 64
     B: 47
-  - R: 62
+  - m_color:
+      serializedVersion: 2
+      rgba: 4282791230
+    R: 62
     G: 53
     B: 70
-  - R: 98
+  - m_color:
+      serializedVersion: 2
+      rgba: 4284831074
+    R: 98
     G: 85
     B: 101
-  - R: 150
+  - m_color:
+      serializedVersion: 2
+      rgba: 4285295766
+    R: 150
     G: 108
     B: 108
-  - R: 171
+  - m_color:
+      serializedVersion: 2
+      rgba: 4286223531
+    R: 171
     G: 148
     B: 122
-  - R: 105
+  - m_color:
+      serializedVersion: 2
+      rgba: 4284632937
+    R: 105
     G: 79
     B: 98
-  - R: 155
+  - m_color:
+      serializedVersion: 2
+      rgba: 4289899419
+    R: 155
     G: 171
     B: 178
-  - R: 199
+  - m_color:
+      serializedVersion: 2
+      rgba: 4291878087
+    R: 199
     G: 220
     B: 208
-  - R: 255
+  - m_color:
+      serializedVersion: 2
+      rgba: 4294967295
+    R: 255
     G: 255
     B: 255
-  - R: 110
+  - m_color:
+      serializedVersion: 2
+      rgba: 4280756078
+    R: 110
     G: 39
     B: 39
-  - R: 179
+  - m_color:
+      serializedVersion: 2
+      rgba: 4281415859
+    R: 179
     G: 56
     B: 49
-  - R: 234
+  - m_color:
+      serializedVersion: 2
+      rgba: 4281749482
+    R: 234
     G: 79
     B: 54
-  - R: 245
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283071989
+    R: 245
     G: 125
     B: 74
-  - R: 174
+  - m_color:
+      serializedVersion: 2
+      rgba: 4281607086
+    R: 174
     G: 35
     B: 52
-  - R: 232
+  - m_color:
+      serializedVersion: 2
+      rgba: 4282072040
+    R: 232
     G: 59
     B: 59
-  - R: 251
+  - m_color:
+      serializedVersion: 2
+      rgba: 4280118267
+    R: 251
     G: 107
     B: 29
-  - R: 247
+  - m_color:
+      serializedVersion: 2
+      rgba: 4279736055
+    R: 247
     G: 150
     B: 23
-  - R: 249
+  - m_color:
+      serializedVersion: 2
+      rgba: 4281058041
+    R: 249
     G: 194
     B: 43
-  - R: 122
+  - m_color:
+      serializedVersion: 2
+      rgba: 4282724474
+    R: 122
     G: 48
     B: 69
-  - R: 158
+  - m_color:
+      serializedVersion: 2
+      rgba: 4281943454
+    R: 158
     G: 69
     B: 57
-  - R: 205
+  - m_color:
+      serializedVersion: 2
+      rgba: 4282214605
+    R: 205
     G: 104
     B: 61
-  - R: 230
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283338982
+    R: 230
     G: 144
     B: 78
-  - R: 251
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283742715
+    R: 251
     G: 185
     B: 84
-  - R: 76
+  - m_color:
+      serializedVersion: 2
+      rgba: 4280565324
+    R: 76
     G: 62
     B: 36
-  - R: 103
+  - m_color:
+      serializedVersion: 2
+      rgba: 4281558631
+    R: 103
     G: 102
     B: 51
-  - R: 162
+  - m_color:
+      serializedVersion: 2
+      rgba: 4282886562
+    R: 162
     G: 169
     B: 71
-  - R: 213
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283162837
+    R: 213
     G: 224
     B: 75
-  - R: 251
+  - m_color:
+      serializedVersion: 2
+      rgba: 4287037435
+    R: 251
     G: 255
     B: 134
-  - R: 22
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283193878
+    R: 22
     G: 90
     B: 76
-  - R: 35
+  - m_color:
+      serializedVersion: 2
+      rgba: 4284715043
+    R: 35
     G: 144
     B: 99
-  - R: 30
+  - m_color:
+      serializedVersion: 2
+      rgba: 4285774878
+    R: 30
     G: 188
     B: 115
-  - R: 145
+  - m_color:
+      serializedVersion: 2
+      rgba: 4285127569
+    R: 145
     G: 219
     B: 105
-  - R: 205
+  - m_color:
+      serializedVersion: 2
+      rgba: 4285325261
+    R: 205
     G: 223
     B: 108
-  - R: 49
+  - m_color:
+      serializedVersion: 2
+      rgba: 4281873969
+    R: 49
     G: 54
     B: 56
-  - R: 55
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283059767
+    R: 55
     G: 78
     B: 74
-  - R: 84
+  - m_color:
+      serializedVersion: 2
+      rgba: 4284776020
+    R: 84
     G: 126
     B: 100
-  - R: 146
+  - m_color:
+      serializedVersion: 2
+      rgba: 4286884242
+    R: 146
     G: 169
     B: 132
-  - R: 176
+  - m_color:
+      serializedVersion: 2
+      rgba: 4287675056
+    R: 176
     G: 186
     B: 144
-  - R: 11
+  - m_color:
+      serializedVersion: 2
+      rgba: 4284833291
+    R: 11
     G: 94
     B: 101
-  - R: 11
+  - m_color:
+      serializedVersion: 2
+      rgba: 4287597067
+    R: 11
     G: 138
     B: 143
-  - R: 14
+  - m_color:
+      serializedVersion: 2
+      rgba: 4288392974
+    R: 14
     G: 175
     B: 155
-  - R: 48
+  - m_color:
+      serializedVersion: 2
+      rgba: 4290371888
+    R: 48
     G: 225
     B: 185
-  - R: 143
+  - m_color:
+      serializedVersion: 2
+      rgba: 4293064847
+    R: 143
     G: 248
     B: 226
-  - R: 50
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283642674
+    R: 50
     G: 51
     B: 83
-  - R: 72
+  - m_color:
+      serializedVersion: 2
+      rgba: 4286007880
+    R: 72
     G: 74
     B: 119
-  - R: 77
+  - m_color:
+      serializedVersion: 2
+      rgba: 4290012493
+    R: 77
     G: 101
     B: 180
-  - R: 77
+  - m_color:
+      serializedVersion: 2
+      rgba: 4293303117
+    R: 77
     G: 155
     B: 230
-  - R: 143
+  - m_color:
+      serializedVersion: 2
+      rgba: 4294955919
+    R: 143
     G: 211
     B: 255
-  - R: 69
+  - m_color:
+      serializedVersion: 2
+      rgba: 4282329413
+    R: 69
     G: 41
     B: 63
-  - R: 107
+  - m_color:
+      serializedVersion: 2
+      rgba: 4285873771
+    R: 107
     G: 62
     B: 117
-  - R: 144
+  - m_color:
+      serializedVersion: 2
+      rgba: 4289289872
+    R: 144
     G: 94
     B: 169
-  - R: 168
+  - m_color:
+      serializedVersion: 2
+      rgba: 4294149288
+    R: 168
     G: 132
     B: 243
-  - R: 234
+  - m_color:
+      serializedVersion: 2
+      rgba: 4293766634
+    R: 234
     G: 173
     B: 237
-  - R: 117
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283710581
+    R: 117
     G: 60
     B: 84
-  - R: 162
+  - m_color:
+      serializedVersion: 2
+      rgba: 4285483938
+    R: 162
     G: 75
     B: 111
-  - R: 207
+  - m_color:
+      serializedVersion: 2
+      rgba: 4286539215
+    R: 207
     G: 101
     B: 127
-  - R: 237
+  - m_color:
+      serializedVersion: 2
+      rgba: 4288250093
+    R: 237
     G: 128
     B: 153
-  - R: 131
+  - m_color:
+      serializedVersion: 2
+      rgba: 4284292227
+    R: 131
     G: 28
     B: 93
-  - R: 195
+  - m_color:
+      serializedVersion: 2
+      rgba: 4283704515
+    R: 195
     G: 36
     B: 84
-  - R: 240
+  - m_color:
+      serializedVersion: 2
+      rgba: 4286074864
+    R: 240
     G: 79
     B: 120
-  - R: 246
+  - m_color:
+      serializedVersion: 2
+      rgba: 4286677494
+    R: 246
     G: 129
     B: 129
-  - R: 125
+  - m_color:
+      serializedVersion: 2
+      rgba: 4287670141
+    R: 125
     G: 167
     B: 144
-  - R: 253
+  - m_color:
+      serializedVersion: 2
+      rgba: 4289776637
+    R: 253
     G: 203
     B: 176

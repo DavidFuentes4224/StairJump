@@ -55,14 +55,17 @@ public class AdManager : MonoBehaviour , IUnityAdsListener
         Debug.Log("Iphone");
         Advertisement.Initialize(appStoreID, isTestAd);
 #endif
-        Advertisement.Initialize(appStoreID, isTestAd);
-
+#if UNITY_ANDROID
+    Debug.Log("Iphone");
+    Advertisement.Initialize(appStoreID, isTestAd);
+#endif
     }
 
     public void PlayBannerAd()
     {
-        if (!Advertisement.IsReady(bannerAd))
+        if (!Advertisement.IsReady(bannerAd) || Advertisement.isShowing)
             return;
+        
         Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
 
         Advertisement.Banner.Show(bannerAd);
