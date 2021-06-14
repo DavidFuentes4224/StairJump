@@ -41,7 +41,7 @@ public class SaveManager : MonoBehaviour
         {
             InitSave();
         }
-        Application.targetFrameRate = Screen.currentResolution.refreshRate;
+        Application.targetFrameRate = 60;
 
     }
 
@@ -82,6 +82,7 @@ public class SaveManager : MonoBehaviour
 
     public SaveObject LoadData()
     {
+#if UNITY_IOS
         try
         {
             var saveObject = new SaveObject();
@@ -99,6 +100,24 @@ public class SaveManager : MonoBehaviour
             Debug.Log(e.Message);
             return null;
         }
+#endif
+#if UNITY_WEBGL
+        try
+        {
+            var saveObject = new SaveObject();
+            {
+                var data = PlayerPrefs.GetString(SaveName);
+                saveObject = JsonUtility.FromJson<SaveObject>(data);
+            }
+            return saveObject;
+        }
+        catch (IOException e)
+        {
+            Debug.Log("File not found or can't be read:");
+            Debug.Log(e.Message);
+            return null;
+        }
+#endif
     }
 
     public void InitSave()
@@ -134,12 +153,18 @@ public class SaveManager : MonoBehaviour
     {
         var json = JsonUtility.ToJson(m_saveObject);
 
+#if UNITY_IOS
         var docPath = Application.persistentDataPath;
         using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"{SaveName}.txt")))
         {
             outputFile.WriteLine(json);
             Debug.Log("Saved following JSON to File at " + docPath + "\\"+ SaveName + ".txt" + " : \n" + json);
         }
+#endif
+#if UNITY_WEBGL
+        PlayerPrefs.SetString(SaveName, json);
+        PlayerPrefs.Save();
+#endif
     }
 
 
