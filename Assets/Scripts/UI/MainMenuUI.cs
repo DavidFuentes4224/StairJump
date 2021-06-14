@@ -14,6 +14,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private AvatarRenderer avatar= null;
     [SerializeField] private Animator m_animator = null;
     [SerializeField] private GameObject m_saveIcon = null;
+    [SerializeField] private GameObject m_mutedIcon = null;
+    [SerializeField] private GameObject m_menuSound = null;
 
     private void Awake()
     {
@@ -24,6 +26,7 @@ public class MainMenuUI : MonoBehaviour
     {
         SetAdditionalOptions(false);
         ColorManager.ColorSelected += OnColorSelected;
+        SetMuteIcons(SaveManager.Instance.IsMuted());
     }
 
     private void OnColorSelected(ColorSelectedArgs e)
@@ -55,6 +58,18 @@ public class MainMenuUI : MonoBehaviour
     public void CloseCharacterCreator()
     {
         m_animator.SetBool("OpenOptions", false);
+    }
+
+    public void ToggleSound()
+    {
+        var active = SaveManager.Instance.ToggleMute();
+        SetMuteIcons(active);
+    }
+
+    private void SetMuteIcons(bool active)
+    {
+        m_mutedIcon.SetActive(active);
+        m_menuSound.SetActive(!active);
     }
 
     public void StartGame()

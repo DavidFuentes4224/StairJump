@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
         GameStateManager.RestartGame -= OnRestartGame;
         GameStateManager.StartGame -= OnStartGame;
         GameStateManager.ContinueGame -= OnContinueGame;
-
     }
 
     private void OnStartGame()

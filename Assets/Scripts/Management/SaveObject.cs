@@ -29,5 +29,6 @@ public class SaveObject
     public Colors Colors;
     public int Score;
     public int Coins;
+    public bool Muted;
     public SelectedSprites SelectedSprites;
 }

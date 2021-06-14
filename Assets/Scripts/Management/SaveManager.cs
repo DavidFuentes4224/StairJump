@@ -41,7 +41,9 @@ public class SaveManager : MonoBehaviour
         {
             InitSave();
         }
-        Application.targetFrameRate = 60;
+#if UNITY_IOS
+    Application.targetFrameRate = 60;
+#endif  
 
     }
 
@@ -126,6 +128,7 @@ public class SaveManager : MonoBehaviour
         {
             Coins = 0,
             Score = 0,
+            Muted = false,
             SelectedSprites = new SelectedSprites()
             {
                 Shirt = 0,
@@ -197,5 +200,15 @@ public class SaveManager : MonoBehaviour
             Shirt = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.SHIRT].color),
         };
         m_saveObject.Colors = colors;
+    }
+
+    public bool ToggleMute()
+    {
+        m_saveObject.Muted = !m_saveObject.Muted;
+        return m_saveObject.Muted;
+    }
+    public bool IsMuted()
+    {
+        return m_saveObject.Muted;
     }
 }

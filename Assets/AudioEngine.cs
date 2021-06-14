@@ -10,6 +10,7 @@ public class AudioEngine : MonoBehaviour
     private AudioSource coinsource = null;
     [SerializeField]
     private AudioSource failsource = null;
+    private bool isMuted = false;
 
 
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class AudioEngine : MonoBehaviour
         GameStateManager.PlayerJumped += OnPlayerJumped;
         GameStateManager.PlayerDied += OnPlayerDied;
         GameStateManager.CoinPickup += OnCoinPickup;
+        isMuted = SaveManager.Instance.IsMuted();
     }
 
     
@@ -32,16 +34,16 @@ public class AudioEngine : MonoBehaviour
 
     private void OnPlayerDied(GameStateManager.DiedEventArgs e)
     {
-        failsource.Play();
+        if(!isMuted) failsource.Play();
     }
 
     private void OnPlayerJumped(GameStateManager.JumpEventArgs obj)
     {
-        jumpsource.Play();
+        if (!isMuted) jumpsource.Play();
     }
 
     private void OnCoinPickup()
     {
-        coinsource.Play();
+        if (!isMuted) coinsource.Play();
     }
 }

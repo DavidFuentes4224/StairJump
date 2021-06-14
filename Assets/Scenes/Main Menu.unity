@@ -546,6 +546,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1785572807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 275258086403644961, guid: 26b1d95f179dba34888122d0fbda03b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1951781616}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1843420982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -798,7 +804,7 @@ PrefabInstance:
     - target: {fileID: 8612170862666893215, guid: d374ad3cf512f304e95973c718d99eea,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.66
+      value: -4.85
       objectReference: {fileID: 0}
     - target: {fileID: 8612170862666893215, guid: d374ad3cf512f304e95973c718d99eea,
         type: 3}
@@ -849,6 +855,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1510715287, guid: 7b675375430122841bf2ebc9ebfb3d90, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 1854751765, guid: 7b675375430122841bf2ebc9ebfb3d90, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -1082,6 +1092,11 @@ PrefabInstance:
       propertyPath: avatar
       value: 
       objectReference: {fileID: 565589791}
+    - target: {fileID: 7252424811718835646, guid: 7b675375430122841bf2ebc9ebfb3d90,
+        type: 3}
+      propertyPath: m_menuSound
+      value: 
+      objectReference: {fileID: 1785572807}
     - target: {fileID: 8563443996584132348, guid: 7b675375430122841bf2ebc9ebfb3d90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

@@ -123,7 +123,9 @@ public class UIManager : MonoBehaviour
 
         //improve logic for if reward ad pops up
         var active = GameStateManager.Instance.GetCanBeRewarded();
+#if UNITY_IOS
         PopupPanel.SetActive(active);
+#endif
         CheckIfCanContinue();
 
         ScorePanel.SetActive(true);

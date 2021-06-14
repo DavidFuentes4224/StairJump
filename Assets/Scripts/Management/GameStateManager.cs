@@ -92,11 +92,6 @@ public class GameStateManager : MonoBehaviour
         RewardCooldown = MAXREWARDCOOLDOWN;
     }
 
-    void Update()
-    {
-        HandleInput();
-    }
-
     private void OnDestroy()
     {
         CoinPickup -= M_OnCoinPickup;
@@ -161,14 +156,6 @@ public class GameStateManager : MonoBehaviour
             RewardCooldown = MAXREWARDCOOLDOWN - 100;
         SaveManager.Instance.UpdateCoin(m_currentCoin);
         PlayerRewarded?.Invoke(new RewardedEventArgs(m_currentCoin));
-    }
-
-    private void HandleInput()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            HandleRestart();
-        }
     }
 
     public void HandleStartGame()

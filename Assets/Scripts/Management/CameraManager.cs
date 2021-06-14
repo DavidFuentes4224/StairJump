@@ -22,7 +22,13 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Screen height = " + Screen.height);
-        Camera.main.orthographicSize = (float)Screen.height / 128;
+#if UNITY_IOS
+    Debug.Log("Screen height = " + Screen.height);
+    Camera.main.orthographicSize = (float)Screen.height / 128;
+#endif
+#if UNITY_WEBGL
+        Camera.main.orthographicSize = 8;
+#endif
+
     }
 }
