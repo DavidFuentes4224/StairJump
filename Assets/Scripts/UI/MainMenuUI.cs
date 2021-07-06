@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using static ColorManager;
 
 public class MainMenuUI : MonoBehaviour
@@ -27,6 +24,11 @@ public class MainMenuUI : MonoBehaviour
         SetAdditionalOptions(false);
         ColorManager.ColorSelected += OnColorSelected;
         SetMuteIcons(SaveManager.Instance.IsMuted());
+    }
+
+    private void OnDestroy()
+    {
+        ColorManager.ColorSelected -= OnColorSelected;
     }
 
     private void OnColorSelected(ColorSelectedArgs e)

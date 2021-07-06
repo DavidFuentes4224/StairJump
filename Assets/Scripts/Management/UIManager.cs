@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -37,6 +35,14 @@ public class UIManager : MonoBehaviour
         GameStateManager.PlayerRewarded += OnPlayerRewarded;
         ScorePanel.SetActive(false);
         TapToStart.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if(ScorePanel.activeInHierarchy && Input.GetKeyDown(KeyCode.R)){
+            TryRestartGame();
+        }
+
     }
 
     private void OnDestroy()
