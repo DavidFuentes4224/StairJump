@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ec41e5940355945ae3f042bc291bb3, type: 3}
+  m_Name: SkinTones
+  m_EditorClassIdentifier: 
+  PalletName: SkinTones
+  Colors:
+  - R: 234
+    G: 198
+    B: 172
+  - R: 237
+    G: 189
+    B: 166
+  - R: 230
+    G: 186
+    B: 157
+  - R: 224
+    G: 176
+    B: 153
+  - R: 232
+    G: 184
+    B: 161
+  - R: 233
+    G: 184
+    B: 144
+  - R: 222
+    G: 174
+    B: 134
+  - R: 215
+    G: 161
+    B: 117
+  - R: 212
+    G: 157
+    B: 117
+  - R: 215
+    G: 153
+    B: 116
+  - R: 214
+    G: 160
+    B: 122
+  - R: 215
+    G: 155
+    B: 118
+  - R: 208
+    G: 148
+    B: 122
+  - R: 240
+    G: 169
+    B: 137
+  - R: 198
+    G: 144
+    B: 100
+  - R: 176
+    G: 124
+    B: 84
+  - R: 177
+    G: 124
+    B: 84
+  - R: 164
+    G: 112
+    B: 73
+  - R: 131
+    G: 90
+    B: 68
+  - R: 122
+    G: 82
+    B: 56
+  - R: 138
+    G: 83
+    B: 52
+  - R: 124
+    G: 72
+    B: 15
+  - R: 122
+    G: 78
+    B: 69
+  - R: 103
+    G: 70
+    B: 51

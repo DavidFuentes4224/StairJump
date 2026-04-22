@@ -1,201 +1,211 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
 using static AvatarRenderer;
+using Random = UnityEngine.Random;
 
 public class SaveManager : MonoBehaviour
 {
-    [SerializeField]
-    private string SaveName = null;
-    [SerializeField]
-    private static bool created = false;
-    [SerializeField]
-    private SaveObject m_saveObject = null;
+	[SerializeField]
+	private string SaveName = null;
+	[SerializeField]
+	private static bool created = false;
+	[SerializeField]
+	private SaveObject m_saveObject = null;
+	[SerializeField]
+	CustomizationOptions m_customizationOptions = null;
 
-    private static SaveManager instance;
-    public static SaveManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
+	private static SaveManager instance;
+	public static SaveManager Instance
+	{
+		get
+		{
+			return instance;
+		}
+	}
 
-    private void Awake()
-    {
-        if(!created)
-        {
-            DontDestroyOnLoad(this.gameObject);
-            created = true;
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        m_saveObject = LoadData();
-        if (m_saveObject == null)
-        {
-            InitSave();
-        }
-        Application.targetFrameRate = 60;
+	private void Awake()
+	{
+		if(!created)
+		{
+			DontDestroyOnLoad(this.gameObject);
+			created = true;
+			instance = this;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+		m_saveObject = LoadData();
+		if (m_saveObject == null)
+		{
+			InitSave();
+		}
+		Application.targetFrameRate = 60;
 
-    }
+	}
 
-    void Start()
-    {
+	void Start()
+	{
 
-        GameStateManager.PlayerDied += OnPlayerDied;
-        //SaveTest();
-    }
+		GameStateManager.PlayerDied += OnPlayerDied;
+		//SaveTest();
+	}
 
-    public void UpdateScore(int score)
-    {
-        if (score > m_saveObject.Score)
-            m_saveObject.Score = score;
-    }
+	public void UpdateScore(int score)
+	{
+		if (score > m_saveObject.Score)
+			m_saveObject.Score = score;
+	}
 
-    public int GetHighScore()
-    {
-        return m_saveObject.Score;
-    }
+	public int GetHighScore()
+	{
+		return m_saveObject.Score;
+	}
 
-    public void UpdateCoin(int coin)
-    {
-        m_saveObject.Coins = coin;
-    }
+	public void UpdateCoin(int coin)
+	{
+		m_saveObject.Coins = coin;
+	}
 
-    public int GetCoin()
-    {
-        return m_saveObject.Coins;
-    }
+	public int GetCoin()
+	{
+		return m_saveObject.Coins;
+	}
 
-    private void OnPlayerDied(GameStateManager.DiedEventArgs e)
-    {
-        UpdateCoin(e.Score);
-        UpdateCoin(e.Coins);
-        SaveFile();
-    }
+	private void OnPlayerDied(GameStateManager.DiedEventArgs e)
+	{
+		UpdateCoin(e.Score);
+		UpdateCoin(e.Coins);
+		SaveFile();
+	}
 
-    public SaveObject LoadData()
-    {
+	public SaveObject LoadData()
+	{
 #if UNITY_IOS
-        try
-        {
-            var saveObject = new SaveObject();
+		try
+		{
+			var saveObject = new SaveObject();
 
-            using (var sr = new StreamReader($"{Application.persistentDataPath}/{SaveName}.txt"))
-            {
-                var data = sr.ReadToEnd();
-                saveObject = JsonUtility.FromJson<SaveObject>(data);
-            }
-            return saveObject;
-        }
-        catch (IOException e)
-        {
-            Debug.Log("File not found or can't be read:");
-            Debug.Log(e.Message);
-            return null;
-        }
+			using (var sr = new StreamReader($"{Application.persistentDataPath}/{SaveName}.txt"))
+			{
+				var data = sr.ReadToEnd();
+				saveObject = JsonUtility.FromJson<SaveObject>(data);
+			}
+			return saveObject;
+		}
+		catch (IOException e)
+		{
+			Debug.Log("File not found or can't be read:");
+			Debug.Log(e.Message);
+			return null;
+		}
 #endif
 #if UNITY_WEBGL
-        try
-        {
-            var saveObject = new SaveObject();
-            {
-                var data = PlayerPrefs.GetString(SaveName);
-                saveObject = JsonUtility.FromJson<SaveObject>(data);
-            }
-            return saveObject;
-        }
-        catch (IOException e)
-        {
-            Debug.Log("File not found or can't be read:");
-            Debug.Log(e.Message);
-            return null;
-        }
+		try
+		{
+			var saveObject = new SaveObject();
+			var data = PlayerPrefs.GetString(SaveName);
+			saveObject = JsonUtility.FromJson<SaveObject>(data);
+			return saveObject;
+		}
+		catch (IOException e)
+		{
+			Debug.Log("File not found or can't be read:");
+			Debug.Log(e.Message);
+			return null;
+		}
 #endif
-    }
+	}
 
-    public void InitSave()
-    {
-        SaveObject saveObject = new SaveObject()
-        {
-            Coins = 0,
-            Score = 0,
-            SelectedSprites = new SelectedSprites()
-            {
-                Shirt = 0,
-                Beard = 0,
-                Hair = 0,
-                Pants = 0
-            },
-            Colors = new Colors
-            {
-                Beard = new Vector3(1f, 1f, 1f),
-                Body = new Vector3(1f, 1f, 1f),
-                Eyes = new Vector3(1f, 1f, 1f),
-                Hair = new Vector3(1f, 1f, 1f),
-                Pants = new Vector3(1f, 1f, 1f),
-                Shirt = new Vector3(1f, 1f, 1f),
-            }
-        }; 
+	public void InitSave()
+	{
+		SaveObject saveObject = new SaveObject()
+		{
+			Coins = 0,
+			Score = 0,
+			SelectedSprites = new SelectedSprites()
+			{
+				Shirt = 0,
+				Beard = Random.Range(0, m_customizationOptions.Beards.Count),
+				Hair = Random.Range(0, m_customizationOptions.Hair.Count),
+				Pants = 0
+			},
+			Colors = new Colors
+			{
+				Beard = GetRandomColorFromPalette(m_customizationOptions.MainPalette),
+				Body = GetRandomColorFromPalette(m_customizationOptions.SkinPalette),
+				Eyes = GetRandomColorFromPalette(m_customizationOptions.MainPalette),
+				Hair = GetRandomColorFromPalette(m_customizationOptions.MainPalette),
+				Pants = GetRandomColorFromPalette(m_customizationOptions.MainPalette),
+				Shirt = GetRandomColorFromPalette(m_customizationOptions.MainPalette),
+			}
+		}; 
 
-        m_saveObject = saveObject;
-        Debug.Log("Creating a new save");
-        SaveFile();
-    }
+		m_saveObject = saveObject;
+		Debug.Log("Creating a new save");
+		SaveFile();
 
-    public void SaveFile()
-    {
-        var json = JsonUtility.ToJson(m_saveObject);
+		Vector3 GetRandomColorFromPalette(ColorPalette colorPalette)
+		{
+			var index = Random.Range(0, colorPalette.Colors.Length);
+			var color = colorPalette.Colors[index];
+			return color.AsVector3();
+		}
+	}
+
+	public void SaveFile()
+	{
+		var json = JsonUtility.ToJson(m_saveObject);
 
 #if UNITY_IOS
-        var docPath = Application.persistentDataPath;
-        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"{SaveName}.txt")))
-        {
-            outputFile.WriteLine(json);
-            Debug.Log("Saved following JSON to File at " + docPath + "\\"+ SaveName + ".txt" + " : \n" + json);
-        }
+		var docPath = Application.persistentDataPath;
+		using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"{SaveName}.txt")))
+		{
+			outputFile.WriteLine(json);
+			Debug.Log("Saved following JSON to File at " + docPath + "\\"+ SaveName + ".txt" + " : \n" + json);
+		}
 #endif
 #if UNITY_WEBGL
-        PlayerPrefs.SetString(SaveName, json);
-        PlayerPrefs.Save();
+		PlayerPrefs.SetString(SaveName, json);
+		PlayerPrefs.Save();
 #endif
-    }
+	}
 
 
-    public Colors GetColors()
-    {
-        return m_saveObject.Colors;
-    }
+	public Colors GetColors()
+	{
+		return m_saveObject.Colors;
+	}
 
-    public SelectedSprites GetSelectedSprites()
-    {
-        return m_saveObject.SelectedSprites;
-    }
+	public SelectedSprites GetSelectedSprites()
+	{
+		return m_saveObject.SelectedSprites;
+	}
 
-    
-    public void UpdateSprites(int m_selectedHair, int m_selectedBeard)
-    {
-        m_saveObject.SelectedSprites.Hair = m_selectedHair;
-        m_saveObject.SelectedSprites.Beard= m_selectedBeard;
-    }
+	
+	public void UpdateSprites(int m_selectedHair, int m_selectedBeard)
+	{
+		m_saveObject.SelectedSprites.Hair = m_selectedHair;
+		m_saveObject.SelectedSprites.Beard= m_selectedBeard;
+	}
 
-    public void UpdateColors(Dictionary<SELECTEDPART, SpriteRenderer> m_SpriteColorByPartName)
-    {
-        var colors = new Colors
-        {
-            Beard = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.BEARD].color),
-            Hair = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.HAIR].color),
-            Body = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.BODY].color),
-            Eyes = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.EYES].color),
-            Pants = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.PANTS].color),
-            Shirt = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.SHIRT].color),
-        };
-        m_saveObject.Colors = colors;
-    }
+	public void UpdateColors(Dictionary<SELECTEDPART, SpriteRenderer> m_SpriteColorByPartName)
+	{
+		var colors = new Colors
+		{
+			Beard = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.BEARD].color),
+			Hair = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.HAIR].color),
+			Body = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.BODY].color),
+			Eyes = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.EYES].color),
+			Pants = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.PANTS].color),
+			Shirt = Utils.ColorToVector(m_SpriteColorByPartName[SELECTEDPART.SHIRT].color),
+		};
+		m_saveObject.Colors = colors;
+	}
+
+	public void DeleteSave()
+	{
+		InitSave();
+	}
 }
