@@ -136,7 +136,6 @@ public class UIManager : MonoBehaviour
 
     public void TryStartPopup()
     {
-        AdManager.Instance.PlayRewardAd();
         CheckIfCanContinue();
         ClosePopup();
     }
