@@ -1,33 +1,30 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ColorButton : MonoBehaviour
+public sealed class ColorButton : MonoBehaviour
 {
-    [SerializeField] ByteColor byteColor = null;
-    [SerializeField] Image colorImage = null;
+	[SerializeField] ByteColor byteColor = null;
+	[SerializeField] Image colorImage = null;
 
-    public ColorButton(ByteColor b)
-    {
-        byteColor = b;
-    }
+	public ColorButton(ByteColor b)
+	{
+		byteColor = b;
+	}
 
-    internal void UpdateColor(ByteColor b)
-    {
-        gameObject.SetActive(true);
-        byteColor = b;
-        colorImage.color = new Color32(b.R,b.G,b.B,255);
-    }
+	public void SelectColor()
+	{
+		ColorManager.Instance.OnColorSelected(byteColor);
+	}
 
-    internal void ClearColor()
-    {
-        gameObject.SetActive(false);
-    }
+	public void UpdateColor(ByteColor b)
+	{
+		gameObject.SetActive(true);
+		byteColor = b;
+		colorImage.color = new Color32(b.R,b.G,b.B,255);
+	}
 
-    public void SelectColor()
-    {
-        ColorManager.OnColorSelected(byteColor);
-    }
+	public void ClearColor()
+	{
+		gameObject.SetActive(false);
+	}
 }

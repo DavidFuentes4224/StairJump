@@ -1,84 +1,77 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static System.Net.Mime.MediaTypeNames;
 
-public class ColorManager : MonoBehaviour
+public sealed class ColorManager : ManagerBase<ColorManager>
 {
-    [SerializeField] ColorButton[] buttons = null;
-    [Header("Config")]
-    [SerializeField] int MAXBUTTONS = 64;
-    [SerializeField] Transform colorButtonPrefab = null;
+	[Header("Prefabs")]
+	[SerializeField] Transform m_colorButtonPrefab = null;
 
-    [Header("Colors")]
-    [SerializeField] private ColorPalette skinPalette = null;
-    [SerializeField] private ColorPalette mainPalette = null;
+	[Header("Colors")]
+	[SerializeField] private ColorPalette m_skinPalette = null;
+	[SerializeField] private ColorPalette m_mainPalette = null;
 
-    public static event Action<ColorSelectedArgs> ColorSelected = null;
-    public class ColorSelectedArgs : EventArgs
-    {
-        public Color color;
-        public ColorSelectedArgs(ByteColor b)
-        {
-            color = new Color32(b.R,b.G,b.B,255);
-        }
-    }
+	public event Action<ColorSelectedArgs> ColorSelected = null;
 
-    public static void OnColorSelected(ByteColor b)
-    {
-        ColorSelected?.Invoke(new ColorSelectedArgs(b));
-    }
+	public void OnColorSelected(ByteColor b) => ColorSelected?.Invoke(new ColorSelectedArgs(b));
 
-    private void Awake()
-    {
-        buttons = new ColorButton[MAXBUTTONS];
-    }
+	public void ChoosePalette(bool isSkin = false) => UpdateColors(isSkin ? m_skinPalette : m_mainPalette);
 
-    private void Start()
-    {
-        CreateColors();
-        UpdateColors(skinPalette);
-    }
+	protected override void Awake()
+	{
+		base.Awake();
+		m_maxButtonLength = Math.Max(m_mainPalette.Colors.Length, m_skinPalette.Colors.Length);
+		m_buttons = new ColorButton[m_maxButtonLength];
+	}
 
-    private void CreateColors()
-    {
-        var offset = 50f;
-        ResizeRect(MAXBUTTONS);
-        for (int i = 0; i < MAXBUTTONS; i++)
-        {
-            var newColor = Instantiate(colorButtonPrefab, Vector3.zero, Quaternion.identity, gameObject.transform);
-            newColor.GetComponent<RectTransform>().anchoredPosition = new Vector2(offset, 0);
-            buttons[i] = newColor.GetComponent<ColorButton>();
-            offset += 200;
-        }
-    }
+	private void Start()
+	{
+		CreateColors();
+		UpdateColors(m_skinPalette);
+	}
 
-    private void UpdateColors(ColorPalette palette)
-    {
-        var size = palette.Colors.Length;
-        ResizeRect(size);
-        for(int i = 0; i < size; i++)
-        {
-            buttons[i].UpdateColor(palette.Colors[i]);
-        }
-        for(int j = size; j < MAXBUTTONS; j++)
-        {
-            buttons[j].ClearColor();
-        }
-    }
+	private void CreateColors()
+	{
+		var offset = c_buttonSpacing;
+		ResizeRect(m_maxButtonLength);
+		for (int i = 0; i < m_maxButtonLength; i++)
+		{
+			var newColor = Instantiate(m_colorButtonPrefab, Vector3.zero, Quaternion.identity, gameObject.transform);
+			newColor.GetComponent<RectTransform>().anchoredPosition = new Vector2(offset, 0);
+			m_buttons[i] = newColor.GetComponent<ColorButton>();
+			offset += c_buttonSize;
+		}
+	}
 
-    private void ResizeRect(int size)
-    {
-        var rectTransform = gameObject.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(size * 200 + 50, rectTransform.sizeDelta.y);
-    }
+	private void UpdateColors(ColorPalette palette)
+	{
+		var numOfColors = palette.Colors.Length;
+		ResizeRect(numOfColors);
 
-    public void ChoosePalette(bool isSkin = false)
-    {
-        if (isSkin)
-            UpdateColors(skinPalette);
-        else
-            UpdateColors(mainPalette);
-    }
+		for(int i = 0; i < numOfColors; i++)
+			m_buttons[i].UpdateColor(palette.Colors[i]);
+		for(int j = numOfColors; j < m_maxButtonLength; j++)
+			m_buttons[j].ClearColor();
+	}
+
+	private void ResizeRect(int numOfColors)
+	{
+		var rectTransform = gameObject.GetComponent<RectTransform>();
+		rectTransform.sizeDelta = new Vector2(numOfColors * c_buttonSize + c_buttonSpacing, rectTransform.sizeDelta.y);
+	}
+
+
+	const int c_buttonSize = 200;
+	const int c_buttonSpacing = 50;
+	int m_maxButtonLength;
+	ColorButton[] m_buttons;
+}
+
+public class ColorSelectedArgs : EventArgs
+{
+	public ColorSelectedArgs(ByteColor b)
+	{
+		Color = new Color32(b.R, b.G, b.B, 255);
+	}
+
+	public Color Color { get; }
 }

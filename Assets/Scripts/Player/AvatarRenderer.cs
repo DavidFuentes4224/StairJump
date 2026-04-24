@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ColorManager;
 
 public class AvatarRenderer : MonoBehaviour
 {
@@ -40,7 +39,7 @@ public class AvatarRenderer : MonoBehaviour
 
 	private void Awake()
 	{
-		ColorSelected += OnColorSelected;
+		ColorManager.Instance.ColorSelected += OnColorSelected;
 	}
 
 	private void OnColorSelected(ColorSelectedArgs e)
@@ -48,7 +47,7 @@ public class AvatarRenderer : MonoBehaviour
 		SpriteRenderer spriteRender;
 		if (m_SpriteColorByPartName.TryGetValue(m_selectedPart, out spriteRender))
 		{
-			spriteRender.color = e.color;
+			spriteRender.color = e.Color;
 		}
 	}
 
@@ -68,7 +67,7 @@ public class AvatarRenderer : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		ColorSelected -= OnColorSelected;
+		ColorManager.Instance.ColorSelected -= OnColorSelected;
 
 	}
 

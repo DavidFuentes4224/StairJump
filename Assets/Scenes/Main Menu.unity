@@ -274,8 +274,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543840094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: -0.7, z: 7.580853}
-  m_LocalScale: {x: 39.517498, y: 57.57339, z: 5.1846957}
+  m_LocalPosition: {x: -5.6481, y: -4.9661, z: 7.580853}
+  m_LocalScale: {x: 48.812016, y: 49.041016, z: 5.1846957}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -668,6 +668,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26b1d95f179dba34888122d0fbda03b3, type: 3}
+--- !u!1001 &463103721701454638
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 786638900295435100, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_Name
+      value: GameStateManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.09351121
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.01062965
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5795659
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463721711352468203, guid: b13d0ebe00f5b7d4ca9459bff81b6bad,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b13d0ebe00f5b7d4ca9459bff81b6bad, type: 3}
 --- !u!1001 &1136636555787383302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -806,6 +875,24 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 2660458584784085933, guid: 7b675375430122841bf2ebc9ebfb3d90,
+        type: 3}
+      propertyPath: m_mainPalette
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d631ad99c822754f9acff52348c5c1c,
+        type: 2}
+    - target: {fileID: 2660458584784085933, guid: 7b675375430122841bf2ebc9ebfb3d90,
+        type: 3}
+      propertyPath: m_skinPalette
+      value: 
+      objectReference: {fileID: 11400000, guid: 83f7a1856318c654eab3d9d95ef383e3,
+        type: 2}
+    - target: {fileID: 2660458584784085933, guid: 7b675375430122841bf2ebc9ebfb3d90,
+        type: 3}
+      propertyPath: m_colorButtonPrefab
+      value: 
+      objectReference: {fileID: 7352265552580413351, guid: b5ab551fd06f6cb498aaf21787fb56ee,
+        type: 3}
     - target: {fileID: 3395429019608130186, guid: 7b675375430122841bf2ebc9ebfb3d90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

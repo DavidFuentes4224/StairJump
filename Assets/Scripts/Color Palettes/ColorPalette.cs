@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Palette", menuName = "ScriptableObjects/ColorPalette", order = 1)]
-public class ColorPalette : ScriptableObject
+public sealed class ColorPalette : ScriptableObject
 {
 	public string PalletName;
 	public ByteColor[] Colors;
@@ -9,22 +9,18 @@ public class ColorPalette : ScriptableObject
 	public void UpdateColorPreviews()
 	{
 		foreach(var c in Colors)
-		{
 			c.UpdateColor();
-		}
 	}
 
 	public void SetColors()
 	{
 		foreach (var c in Colors)
-		{
 			c.SetColor();
-		}
 	}
 }
 
 [System.Serializable]
-public class ByteColor
+public sealed class ByteColor
 {
 	[SerializeField] private Color32 m_color;
 	public byte R;

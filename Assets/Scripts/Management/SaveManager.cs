@@ -48,7 +48,7 @@ public class SaveManager : MonoBehaviour
 	void Start()
 	{
 
-		GameStateManager.PlayerDied += OnPlayerDied;
+		GameStateManager.Instance.PlayerDied += OnPlayerDied;
 		//SaveTest();
 	}
 
@@ -73,7 +73,7 @@ public class SaveManager : MonoBehaviour
 		return m_saveObject.Coins;
 	}
 
-	private void OnPlayerDied(GameStateManager.DiedEventArgs e)
+	private void OnPlayerDied(DiedEventArgs e)
 	{
 		UpdateCoin(e.Score);
 		UpdateCoin(e.Coins);

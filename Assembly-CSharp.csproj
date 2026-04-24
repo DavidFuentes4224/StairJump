@@ -104,6 +104,7 @@
     <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\AndroidTaskUtils.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\SavedGame\SavedGameMetadataUpdate.cs" />
     <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\CloudPrefs\SyncableItem.cs" />
+    <Compile Include="Assets\Scripts\Player\CustomizationOptions.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\LeaderboardScoreData.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeEventClient.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Video\iVideoClient.cs" />
@@ -221,11 +222,10 @@
     <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesUserProfile.cs" />
     <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudCurrencyInt.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Platforms\Android\AndroidClient.cs" />
+    <Compile Include="Assets\Scripts\Management\ManagerBase.cs" />
     <Compile Include="Assets\Scripts\Parallaxer.cs" />
     <Compile Include="Assets\Scripts\Player\AvatarRenderer.cs" />
     <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesLeaderboard.cs" />
-    <Compile Include="Assets\Scripts\Management\SaveManagerEditor.cs" />
-    <Compile Include="Assets\Scripts\Player\CustomizationOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
