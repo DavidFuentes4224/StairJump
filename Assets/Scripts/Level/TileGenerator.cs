@@ -15,10 +15,10 @@ public class TileGenerator : MonoBehaviour
 	private void Awake()
 	{
 		m_tiles = new Transform[MAXTILES];
-		GameStateManager.Instance.PlayerJumped += OnPlayerJumped;
-		GameStateManager.Instance.RestartGame += OnRestartGame;
-		GameStateManager.Instance.StartGame += OnStartGame;
-		GameStateManager.Instance.ContinueGame += OnContinueGame;
+		GameStateManager.PlayerJumped += OnPlayerJumped;
+		GameStateManager.RestartGame += OnRestartGame;
+		GameStateManager.StartGame += OnStartGame;
+		GameStateManager.ContinueGame += OnContinueGame;
 	}
 
 	private void Start()
@@ -34,10 +34,10 @@ public class TileGenerator : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		GameStateManager.Instance.PlayerJumped -= OnPlayerJumped;
-		GameStateManager.Instance.RestartGame -= OnRestartGame;
-		GameStateManager.Instance.StartGame -= OnStartGame;
-		GameStateManager.Instance.ContinueGame -= OnContinueGame;
+		GameStateManager.PlayerJumped -= OnPlayerJumped;
+		GameStateManager.RestartGame -= OnRestartGame;
+		GameStateManager.StartGame -= OnStartGame;
+		GameStateManager.ContinueGame -= OnContinueGame;
 
 	}
 

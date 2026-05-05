@@ -29,24 +29,24 @@ public class UIManager : MonoBehaviour
 	{
 		//Seperate UI behaviors into this file (GameStateManager)
 		//Subscribe to events
-		GameStateManager.Instance.StartGame += OnStartGame;
-		GameStateManager.Instance.PlayerDied += OnPlayerDied;
-		GameStateManager.Instance.PlayerLanded += OnPlayerLanded;
-		GameStateManager.Instance.RestartGame += OnRestartGame;
-		GameStateManager.Instance.ContinueGame += OnContinueGame;
-		GameStateManager.Instance.PlayerRewarded += OnPlayerRewarded;
+		GameStateManager.StartGame += OnStartGame;
+		GameStateManager.PlayerDied += OnPlayerDied;
+		GameStateManager.PlayerLanded += OnPlayerLanded;
+		GameStateManager.RestartGame += OnRestartGame;
+		GameStateManager.ContinueGame += OnContinueGame;
+		GameStateManager.PlayerRewarded += OnPlayerRewarded;
 		ScorePanel.SetActive(false);
 		TapToStart.SetActive(true);
 	}
 
 	private void OnDestroy()
 	{
-		GameStateManager.Instance.StartGame -= OnStartGame;
-		GameStateManager.Instance.PlayerDied -= OnPlayerDied;
-		GameStateManager.Instance.PlayerLanded -= OnPlayerLanded;
-		GameStateManager.Instance.RestartGame -= OnRestartGame;
-		GameStateManager.Instance.ContinueGame -= OnContinueGame;
-		GameStateManager.Instance.PlayerRewarded -= OnPlayerRewarded;
+		GameStateManager.StartGame -= OnStartGame;
+		GameStateManager.PlayerDied -= OnPlayerDied;
+		GameStateManager.PlayerLanded -= OnPlayerLanded;
+		GameStateManager.RestartGame -= OnRestartGame;
+		GameStateManager.ContinueGame -= OnContinueGame;
+		GameStateManager.PlayerRewarded -= OnPlayerRewarded;
 	}
 
 	private void OnPlayerRewarded(RewardedEventArgs e)
@@ -74,7 +74,6 @@ public class UIManager : MonoBehaviour
 	public void TryRestartGame()
 	{
 		GameStateManager.Instance.HandleRestart();
-
 	}
 
 	private void OnStartGame()
@@ -88,6 +87,7 @@ public class UIManager : MonoBehaviour
 		ScorePanel.SetActive(false);
 		TapToStart.SetActive(true);
 		ResetButtons();
+		SetText();
 	}
 
 	private void OnContinueGame()
@@ -102,7 +102,7 @@ public class UIManager : MonoBehaviour
 
 	public void TryContinue()
 	{
-		GameStateManager.Instance.OnContinueGame();
+		GameStateManager.Instance.RaiseContinueGame();
 	}
 
 	private void SetText()
@@ -121,9 +121,6 @@ public class UIManager : MonoBehaviour
 
 		SetDisplays(e);
 
-		//improve logic for if reward ad pops up
-		var active = GameStateManager.Instance.GetCanBeRewarded();
-		PopupPanel.SetActive(active);
 		CheckIfCanContinue();
 
 		ScorePanel.SetActive(true);

@@ -185,16 +185,8 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0
-    functionName: EnableJumping
-    data: 
-    objectReferenceParameter: {fileID: 21300000, guid: fe839a20db82e964aa49c6568bb9f004,
-      type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.33333334
-    functionName: DisableJumping
+    functionName: OnLand
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -1,7 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static ColorManager;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -15,6 +14,7 @@ public class MainMenuUI : MonoBehaviour
 	private void Awake()
 	{
 		m_animator = gameObject.GetComponent<Animator>();
+		avatar = FindObjectOfType<AvatarRenderer>();
 	}
 
 	private void Start()

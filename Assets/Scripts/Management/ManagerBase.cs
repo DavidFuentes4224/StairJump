@@ -9,8 +9,12 @@ public abstract class ManagerBase<T> : MonoBehaviour where T: MonoBehaviour
 	protected virtual void Awake()
 	{
 		if (m_instance != null)
+		{
+			Debug.LogWarning($"Instance for {m_instance.GetType()} already exists.");
 			Destroy(this.gameObject);
-		
+			return;
+		}
+
 		m_instance = this as T;
 		DontDestroyOnLoad(this.gameObject);
 	}

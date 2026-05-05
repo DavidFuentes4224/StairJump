@@ -19,14 +19,14 @@ public class Parallaxer : MonoBehaviour
 	void Start()
 	{
 		m_targetOffset = Vector2.zero;
-		GameStateManager.Instance.RestartGame += OnRestartGame;
-		GameStateManager.Instance.PlayerJumped += OnPlayerJumped;
+		GameStateManager.RestartGame += OnRestartGame;
+		GameStateManager.PlayerJumped += OnPlayerJumped;
 	}
 
 	private void OnDestroy()
 	{
-		GameStateManager.Instance.RestartGame -= OnRestartGame;
-		GameStateManager.Instance.PlayerJumped -= OnPlayerJumped;
+		GameStateManager.RestartGame -= OnRestartGame;
+		GameStateManager.PlayerJumped -= OnPlayerJumped;
 	}
 
 	private void OnPlayerJumped(JumpEventArgs e)

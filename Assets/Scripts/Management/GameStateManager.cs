@@ -13,14 +13,14 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 	[SerializeField] private const int MAXREWARDCOOLDOWN = 250;
 	[SerializeField] private int RewardCooldown = 0;
 
-	public event Action<JumpEventArgs> PlayerJumped;
-	public event Action PlayerLanded;
-	public event Action<DiedEventArgs> PlayerDied;
-	public event Action RestartGame;
-	public event Action StartGame;
-	public event Action ContinueGame;
-	public event Action CoinPickup;
-	public event Action<RewardedEventArgs> PlayerRewarded;
+	public static event Action<JumpEventArgs> PlayerJumped;
+	public static event Action PlayerLanded;
+	public static event Action<DiedEventArgs> PlayerDied;
+	public static event Action RestartGame;
+	public static event Action StartGame;
+	public static event Action ContinueGame;
+	public static event Action CoinPickup;
+	public static event Action<RewardedEventArgs> PlayerRewarded;
 
 	public Player PlayerRef;
 
@@ -36,25 +36,30 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 		m_currentCoin = SaveManager.Instance.GetCoin();
 		CoinPickup += M_OnCoinPickup;
 		RewardCooldown = MAXREWARDCOOLDOWN;
-	}
-
-	void Update()
-	{
-		HandleInput();
+		InputController.JumpPerformed += Input_OnJump;
+		InputController.FlipPerformed += Input_OnFlip;
+		InputController.RestartPerformed += Input_OnRestart;
 	}
 
 	private void OnDestroy()
 	{
 		CoinPickup -= M_OnCoinPickup;
+		InputController.JumpPerformed -= Input_OnJump;
+		InputController.FlipPerformed -= Input_OnFlip;
+		InputController.RestartPerformed -= Input_OnRestart;
 	}
 
-	public void OnPlayerJumped(int direction)
+	private void Input_OnFlip() { if (!Instance.gameRunning) HandleStartGame(); }
+	private void Input_OnJump() { if (!Instance.gameRunning) HandleStartGame(); }
+	private void Input_OnRestart() => HandleRestart();
+
+	public void RaisePlayerJumped(int direction)
 	{
 		Debug.Log("EVENT: Jumped");
 		PlayerJumped?.Invoke(new JumpEventArgs(direction));
 	}
 
-	public void OnPlayerLanded()
+	public void RaisePlayerLanded()
 	{
 		Debug.Log("EVENT: Landed");
 		UpdateScore();
@@ -62,26 +67,27 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 		PlayerLanded?.Invoke();
 	}
 
-	public void OnPlayerDied()
+	public void RaisePlayerDied()
 	{
 		Debug.Log("EVENT: Died");
 		PlayerDied?.Invoke(new DiedEventArgs(m_currentScore, m_currentCoin));
 	}
 
-	public void OnRestartGame()
+	public void RaiseRestartGame()
 	{
 		Debug.Log("EVENT: Restarted");
 		Instance.gameContinuedAlready = false;
+		Instance.gameRunning = false;
 		RestartGame?.Invoke();
 	}
 
-	public void OnStartGame()
+	public void RaiseStartGame()
 	{
 		Debug.Log("EVENT: Started");
 		StartGame?.Invoke();
 	}
 
-	public void OnContinueGame()
+	public void RaiseContinueGame()
 	{
 		Debug.Log("EVENT: Continued");
 		if (Instance.m_currentCoin > CONTINUEAMOUNT)
@@ -93,7 +99,7 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 		}
 	}
 
-	public void OnCoinPickup()
+	public void RaiseCoinPickup()
 	{
 		Debug.Log("EVENT: Coin picked up");
 		CoinPickup?.Invoke();
@@ -108,34 +114,25 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 		PlayerRewarded?.Invoke(new RewardedEventArgs(m_currentCoin));
 	}
 
-	private void HandleInput()
-	{
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			HandleRestart();
-		}
-	}
-
 	public void HandleStartGame()
 	{
-		if (gameRunning)
+		if (Instance.gameRunning)
 			return;
-		gameRunning = true;
-		OnStartGame();
+		Instance.gameRunning = true;
+		RaiseStartGame();
 	}
 
 	public void HandleRestart()
 	{
-		OnRestartGame();
-		m_currentScore = -1;
+		m_currentScore = 0;
 		m_currentCoin = SaveManager.Instance.GetCoin();
-		UpdateScore();
-		gameRunning = false;
+		Instance.gameRunning = false;
+		RaiseRestartGame();
 	}
 
 	public void HandleQuit()
 	{
-		gameRunning = false;
+		Instance.gameRunning = false;
 		m_currentScore = 0;
 		gameContinuedAlready = false;
 	}

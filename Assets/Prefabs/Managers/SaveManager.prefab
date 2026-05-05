@@ -43,4 +43,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f58b2e43432b5e42856b5f700075ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SaveName: Test
+  SaveName: SaveData
+  m_saveObject:
+    Colors:
+      Body: {x: 0.9137255, y: 0.72156864, z: 0.5647059}
+      Eyes: {x: 1, y: 1, z: 1}
+      Hair: {x: 0.9098039, y: 0.23137255, z: 0.23137255}
+      Beard: {x: 0.9843137, y: 1, z: 0.5254902}
+      Shirt: {x: 0.92941177, y: 0.5019608, z: 0.6}
+      Pants: {x: 0.9411765, y: 0.30980393, z: 0.47058824}
+    Score: 0
+    Coins: 0
+    SelectedSprites:
+      Shirt: 0
+      Pants: 0
+      Hair: 11
+      Beard: 4
+  m_customizationOptions: {fileID: 11400000, guid: 39c3a30bfc5751f46b5019d0a8178e93,
+    type: 2}

@@ -6,7 +6,7 @@ public class Coin : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			GameStateManager.Instance.OnCoinPickup();
+			GameStateManager.Instance.RaiseCoinPickup();
 			gameObject.SetActive(false);
 		}
 	}

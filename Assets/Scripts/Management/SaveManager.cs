@@ -4,7 +4,7 @@ using UnityEngine;
 using static AvatarRenderer;
 using Random = UnityEngine.Random;
 
-public class SaveManager : MonoBehaviour
+public class SaveManager : ManagerBase<SaveManager>
 {
 	[SerializeField]
 	private string SaveName = null;
@@ -15,41 +15,19 @@ public class SaveManager : MonoBehaviour
 	[SerializeField]
 	CustomizationOptions m_customizationOptions = null;
 
-	private static SaveManager instance;
-	public static SaveManager Instance
-	{
-		get
-		{
-			return instance;
-		}
-	}
 
-	private void Awake()
+	protected override void Awake()
 	{
-		if(!created)
-		{
-			DontDestroyOnLoad(this.gameObject);
-			created = true;
-			instance = this;
-		}
-		else
-		{
-			Destroy(gameObject);
-		}
+		base.Awake();
 		m_saveObject = LoadData();
 		if (m_saveObject == null)
-		{
 			InitSave();
-		}
 		Application.targetFrameRate = 60;
-
 	}
 
 	void Start()
 	{
-
-		GameStateManager.Instance.PlayerDied += OnPlayerDied;
-		//SaveTest();
+		GameStateManager.PlayerDied += OnPlayerDied;
 	}
 
 	public void UpdateScore(int score)

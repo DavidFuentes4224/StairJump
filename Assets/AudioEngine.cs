@@ -13,18 +13,18 @@ public class AudioEngine : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		GameStateManager.Instance.PlayerJumped += OnPlayerJumped;
-		GameStateManager.Instance.PlayerDied += OnPlayerDied;
-		GameStateManager.Instance.CoinPickup += OnCoinPickup;
+		GameStateManager.PlayerJumped += OnPlayerJumped;
+		GameStateManager.PlayerDied += OnPlayerDied;
+		GameStateManager.CoinPickup += OnCoinPickup;
 	}
 
 	
 
 	private void OnDestroy()
 	{
-		GameStateManager.Instance.PlayerJumped -= OnPlayerJumped;
-		GameStateManager.Instance.PlayerDied -= OnPlayerDied;
-		GameStateManager.Instance.CoinPickup -= OnCoinPickup;
+		GameStateManager.PlayerJumped -= OnPlayerJumped;
+		GameStateManager.PlayerDied -= OnPlayerDied;
+		GameStateManager.CoinPickup -= OnCoinPickup;
 
 	}
 
