@@ -377,18 +377,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1464346263}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1246761937 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8562903254501368890, guid: 64894c1a8f2cab9438dbaa5367cfab47,
-    type: 3}
-  m_PrefabInstance: {fileID: 8562903253737585041}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f58b2e43432b5e42856b5f700075ec6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1254352897 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 99929075434850316, guid: 7b675375430122841bf2ebc9ebfb3d90,
@@ -1163,16 +1151,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1246761937}
+      objectReference: {fileID: 565589791}
     - target: {fileID: 678651776661434725, guid: 7b675375430122841bf2ebc9ebfb3d90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SaveFile
+      value: SaveSelections
       objectReference: {fileID: 0}
     - target: {fileID: 678651776661434725, guid: 7b675375430122841bf2ebc9ebfb3d90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SaveManager, Assembly-CSharp
+      value: AvatarRenderer, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2166883246533885588, guid: 7b675375430122841bf2ebc9ebfb3d90,
         type: 3}

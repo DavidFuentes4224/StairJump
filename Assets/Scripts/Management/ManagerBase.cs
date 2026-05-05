@@ -6,6 +6,8 @@ public abstract class ManagerBase<T> : MonoBehaviour where T: MonoBehaviour
 
 	public static T Instance => m_instance;
 
+	protected virtual bool ShouldDestroyOnLoad => false;
+
 	protected virtual void Awake()
 	{
 		if (m_instance != null)
@@ -16,7 +18,8 @@ public abstract class ManagerBase<T> : MonoBehaviour where T: MonoBehaviour
 		}
 
 		m_instance = this as T;
-		DontDestroyOnLoad(this.gameObject);
+		if (!ShouldDestroyOnLoad)
+			DontDestroyOnLoad(this.gameObject);
 	}
 
 	static T m_instance;

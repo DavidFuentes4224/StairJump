@@ -24,6 +24,8 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 
 	public Player PlayerRef;
 
+	protected override bool ShouldDestroyOnLoad => true;
+
 	protected override void Awake()
 	{
 		base.Awake();
