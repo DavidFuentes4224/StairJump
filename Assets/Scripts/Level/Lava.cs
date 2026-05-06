@@ -4,12 +4,15 @@ public class Lava : MonoBehaviour
 {
 	[SerializeField]
 	private Transform m_playerStart = null;
-	private Vector3 m_originalFirePosition;
-	private float m_fireSpeed;
+	[SerializeField]
+	private AnimationCurve m_speedCurve;
+	[SerializeField]
+	private float m_lavaDecreaseAmount = 2.0f;
+
 
 	public void DecreaseFirePosition()
 	{
-		var decreasedPos = transform.position - (Vector3.up * c_lavaDecreaseAmount);
+		var decreasedPos = transform.position - (Vector3.up * m_lavaDecreaseAmount);
 		var newPos = (decreasedPos.y > m_originalFirePosition.y) ? decreasedPos : m_originalFirePosition;
 		transform.position = newPos;
 	}
@@ -21,7 +24,6 @@ public class Lava : MonoBehaviour
 		GameStateManager.RestartGame += OnRestartGame;
 		GameStateManager.StartGame += OnStartGame;
 		GameStateManager.ContinueGame += OnContinueGame;
-
 	}
 
 	private void Start()
@@ -34,9 +36,7 @@ public class Lava : MonoBehaviour
 	void Update()
 	{
 		if (!m_playerDead)
-		{
 			UpdateFirePosition();
-		}
 	}
 
 	private void OnDestroy()
@@ -46,7 +46,6 @@ public class Lava : MonoBehaviour
 		GameStateManager.RestartGame -= OnRestartGame;
 		GameStateManager.StartGame -= OnStartGame;
 		GameStateManager.ContinueGame -= OnContinueGame;
-
 	}
 
 	private void OnStartGame()
@@ -59,6 +58,7 @@ public class Lava : MonoBehaviour
 		transform.position = m_originalFirePosition;
 		m_playerDead = false;
 		enabled = false;
+		m_speedCurveValue = 0;
 	}
 
 	private void OnContinueGame()
@@ -78,10 +78,17 @@ public class Lava : MonoBehaviour
 
 	private void UpdateFirePosition()
 	{
-		transform.position += Vector3.up * Time.deltaTime * m_fireSpeed;
+		m_speedCurveValue += (Time.deltaTime * c_timeToPeakCurveValue);
+		m_speedCurveValue = Mathf.Min(m_speedCurveValue, 1.0f);
+		var speedModifier = m_speedCurve.Evaluate(m_speedCurveValue);
+		transform.position += Vector3.up * Time.deltaTime * (m_fireSpeed * speedModifier);
 	}
 
-	const float c_timeToReact = 3f;
-	const float c_lavaDecreaseAmount = 1f;
+	const float c_timeToReact = 3.0f;
+	const float c_timeToPeakCurveValue = 1 / 15f; // 15 Seconds
+	
 	bool m_playerDead;
+	float m_speedCurveValue;
+	float m_fireSpeed;
+	Vector3 m_originalFirePosition;
 }
