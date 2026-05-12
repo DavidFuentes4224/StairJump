@@ -60,8 +60,8 @@ public sealed class ColorManager : ManagerBase<ColorManager>
 	}
 
 
-	const int c_buttonSize = 200;
-	const int c_buttonSpacing = 50;
+	const int c_buttonSize = 125;
+	const int c_buttonSpacing = 10;
 	int m_maxButtonLength;
 	ColorButton[] m_buttons;
 }

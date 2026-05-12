@@ -121,7 +121,6 @@ public class SaveManager : ManagerBase<SaveManager>
 		}; 
 
 		m_saveObject = saveObject;
-		Debug.Log("Creating a new save");
 		SaveFile();
 
 		Vector3 GetRandomColorFromPalette(ColorPalette colorPalette)

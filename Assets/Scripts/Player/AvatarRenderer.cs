@@ -37,11 +37,6 @@ public class AvatarRenderer : MonoBehaviour
 		}
 	}
 
-	private void Awake()
-	{
-		ColorManager.Instance.ColorSelected += OnColorSelected;
-	}
-
 	private void OnColorSelected(ColorSelectedArgs e)
 	{
 		SpriteRenderer spriteRender;
@@ -53,6 +48,8 @@ public class AvatarRenderer : MonoBehaviour
 
 	private void Start()
 	{
+		ColorManager.Instance.ColorSelected += OnColorSelected;
+
 		m_SpriteColorByPartName = new Dictionary<SELECTEDPART, SpriteRenderer>() {
 			{ SELECTEDPART.BODY, m_bodyRenderer },
 			{ SELECTEDPART.EYES, m_eyesRenderer},

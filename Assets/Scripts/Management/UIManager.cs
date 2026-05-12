@@ -174,7 +174,6 @@ public class UIManager : MonoBehaviour
 
 	private void SetCoinDisplay(int c)
 	{
-		Debug.Log("Updating coin display to " + c);
 		coins.text = c.ToString();
 	}
 

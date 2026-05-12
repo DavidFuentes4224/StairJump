@@ -23,6 +23,11 @@ public class MainMenuUI : MonoBehaviour
 		ColorManager.Instance.ColorSelected += OnColorSelected;
 	}
 
+	private void OnDestroy()
+	{
+		ColorManager.Instance.ColorSelected -= OnColorSelected;
+	}
+
 	private void OnColorSelected(ColorSelectedArgs e)
 	{
 		SetSaved(false);

@@ -57,13 +57,11 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 
 	public void RaisePlayerJumped(int direction)
 	{
-		Debug.Log("EVENT: Jumped");
 		PlayerJumped?.Invoke(new JumpEventArgs(direction));
 	}
 
 	public void RaisePlayerLanded()
 	{
-		Debug.Log("EVENT: Landed");
 		UpdateScore();
 		Instance.HandleLand();
 		PlayerLanded?.Invoke();
@@ -71,13 +69,11 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 
 	public void RaisePlayerDied()
 	{
-		Debug.Log("EVENT: Died");
 		PlayerDied?.Invoke(new DiedEventArgs(m_currentScore, m_currentCoin));
 	}
 
 	public void RaiseRestartGame()
 	{
-		Debug.Log("EVENT: Restarted");
 		Instance.gameContinuedAlready = false;
 		Instance.gameRunning = false;
 		RestartGame?.Invoke();
@@ -85,13 +81,11 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 
 	public void RaiseStartGame()
 	{
-		Debug.Log("EVENT: Started");
 		StartGame?.Invoke();
 	}
 
 	public void RaiseContinueGame()
 	{
-		Debug.Log("EVENT: Continued");
 		if (Instance.m_currentCoin > CONTINUEAMOUNT)
 		{
 			Instance.m_currentCoin -= CONTINUEAMOUNT;
@@ -103,7 +97,6 @@ public sealed class GameStateManager : ManagerBase<GameStateManager>
 
 	public void RaiseCoinPickup()
 	{
-		Debug.Log("EVENT: Coin picked up");
 		CoinPickup?.Invoke();
 	}
 
